@@ -41,6 +41,6 @@ module.exports = async (req, res) => {
     expire,
     signature,
     publicKey:   process.env.IMAGEKIT_PUBLIC_KEY   || "public_Dm9o2L7td86DzeKvGQMW6hUNQN0=",
-    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "https://ik.imagekit.io/caresphere",
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || "https://ik.imagekit.io/destinydriving",
   });
 };
