@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Health Resources — CareSphere</title>
+  <link rel="icon" href="images/logo.png" type="image/png" />
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .resource-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; transition:var(--transition); }
+    .resource-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+    .resource-card-img { height:140px; display:flex; align-items:center; justify-content:center; font-size:3.5rem; }
+    .resource-card-body { padding:1.5rem 1.8rem 2rem; }
+    .resource-card-body h4 { margin-bottom:0.5rem; }
+    .resource-card-body p { font-size:0.9rem; }
+    .topic-pill { display:inline-flex; align-items:center; gap:0.4rem; padding:0.5rem 1.2rem; border-radius:50px; font-size:0.85rem; font-weight:500; background:var(--white); border:1.5px solid var(--border); color:var(--text-mid); cursor:pointer; transition:var(--transition); }
+    .topic-pill:hover,.topic-pill.active { background:var(--teal); color:var(--white); border-color:var(--teal); }
+    .topic-filters { display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:2.5rem; }
+    .disclaimer { background:var(--teal-pale); border:1px solid var(--teal-light); border-radius:var(--radius); padding:1.2rem 1.5rem; display:flex; gap:0.8rem; align-items:flex-start; }
+    .disclaimer i { color:var(--teal); flex-shrink:0; margin-top:3px; }
+    .disclaimer p { font-size:0.87rem; margin:0; }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="CareSphere Logo" onerror="this.style.display='none'"/>Care<span class="accent">Sphere</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li><li><a href="community.html">Community</a></li>
+        <li><a href="resources.html" class="active">Resources</a></li>
+        <li><a href="impact.html">Impact</a></li><li><a href="blog.html">Blog</a></li>
+        <li><a href="members.html">Members</a></li><li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get in Touch</a>
+      <button class="nav-toggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Health Resources</span></div>
+        <h1>Health Resources</h1>
+        <p>Trusted, evidence-based health information to help you and your community thrive.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="disclaimer fade-in">
+        <i class="fa-solid fa-circle-info fa-lg"></i>
+        <p><strong>Health Information Disclaimer:</strong> The resources below are provided for educational purposes only and do not replace professional medical advice. Always consult a qualified healthcare provider for diagnosis and treatment. CareSphere's telemedicine service is available for personalized consultations.</p>
+      </div>
+
+      <div style="margin-top:3rem;">
+        <div class="section-header fade-in">
+          <span class="section-label">Browse by Topic</span>
+          <h2>Health Education Resources</h2>
+          <p>Explore our library of trusted health information across key health topics.</p>
+        </div>
+
+        <!-- TOPIC FILTERS -->
+        <div class="topic-filters fade-in">
+          <span class="topic-pill active">🌿 All Topics</span>
+          <span class="topic-pill">🌱 Sexual & Reproductive Health</span>
+          <span class="topic-pill">🧠 Mental Health</span>
+          <span class="topic-pill">🥗 Nutrition</span>
+          <span class="topic-pill">🛡️ Preventive Care</span>
+          <span class="topic-pill">🦠 Disease Awareness</span>
+        </div>
+
+        <!-- SRH -->
+        <div style="margin-bottom:3.5rem;">
+          <h3 style="margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;"><span>🌱</span> Sexual & Reproductive Health</h3>
+          <div class="grid-3">
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,#fde8f0,#ffd6e7);">
+                <img src="img-resources/contraception.png" alt="Contraception Image" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">SRH</span>
+                <h4>Understanding Contraception Options</h4>
+                <p>A comprehensive guide to modern contraception methods, their effectiveness, and how to access them.</p>
+                <a href="resources/CareSphere-Health-Tip-Understanding-Contraception-Options.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,#fde8f0,#ffd6e7);">
+                <img src="img-resources/pregnancy.png" alt="Health & Pregnancy Care Image" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">SRH</span>
+                <h4>Maternal Health & Pregnancy Care</h4>
+                <p>Essential information for expectant mothers on prenatal care, nutrition, and safe delivery options.</p>
+                <a href="resources/Your-Pregnancy-Journey-Starts-Here.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,#fde8f0,#ffd6e7);">
+                <img src="img-resources/prevention.png" alt="Testing & Treatment Image" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">SRH</span>
+                <h4>STIs: Prevention, Testing & Treatment</h4>
+                <p>Stigma-free, factual information on sexually transmitted infections, prevention strategies, and care.</p>
+                <a href="resources/CareSphere-Health-Tip-STIs-Prevention-Testing-and-Treatment.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MENTAL HEALTH -->
+        <div style="margin-bottom:3.5rem;">
+          <h3 style="margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;"><span>🧠</span> Mental Health Awareness</h3>
+          <div class="grid-3">
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,var(--teal-pale),#e8f4f8);">
+                <img src="img-resources/depression.png" alt="CEO" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">Mental Health</span>
+                <h4>Recognizing Signs of Anxiety & Depression</h4>
+                <p>Learn to identify early warning signs and understand when and how to seek professional help.</p>
+                <a href="resources/CareSphere-Health-Tip-Recognizing-Signs-of-Anxiety-and-Depression.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,var(--teal-pale),#e8f4f8);">
+                <img src="img-resources/stress.png" alt="Stress Management Techniques" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">Mental Health</span>
+                <h4>Stress Management Techniques</h4>
+                <p>Practical, evidence-based strategies for managing daily stress and building emotional resilience.</p>
+                <a href="resources/CareSphere-Health-Guide-Stress-Management-Techniques.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,var(--teal-pale),#e8f4f8);">
+                <img src="img-resources/breaking.png" alt="Breaking the Stigma Around Mental Health" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">Mental Health</span>
+                <h4>Breaking the Stigma Around Mental Health</h4>
+                <p>Understanding why mental health matters and how communities can support one another openly.</p>
+                <a href="resources/CareSphere-Health-Guide-Breaking-the-Stigma-Around-Mental-Health.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NUTRITION -->
+        <div style="margin-bottom:3.5rem;">
+          <h3 style="margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;"><span>🥗</span> Nutrition Guidance</h3>
+          <div class="grid-3">
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,var(--green-pale),#e6f4ec);">
+                <img src="img-resources/balanced.png" alt="Balanced Eating on a Budget" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">Nutrition</span>
+                <h4>Balanced Eating on a Budget</h4>
+                <p>How to maintain nutritious, balanced meals using locally available and affordable foods.</p>
+                <a href="resources/CareSphere-Health-Guide-Balanced-Eating-on-a-Budget.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,var(--green-pale),#e6f4ec);">
+                <img src="img-resources/child-adolescent.png" alt="Child & Adolescent Nutrition" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">Nutrition</span>
+                <h4>Child & Adolescent Nutrition</h4>
+                <p>Essential nutritional needs for growing children and adolescents to support healthy development.</p>
+                <a href="resources/CareSphere-Health-Guide-Child-and-Adolescent-Nutrition.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,var(--green-pale),#e6f4ec);">
+                <img src="img-resources/hydration.png" alt="Hydration & Common Deficiencies" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">Nutrition</span>
+                <h4>Hydration & Common Deficiencies</h4>
+                <p>The importance of hydration and how to identify and address common nutrient deficiencies.</p>
+                <a href="resources/CareSphere-Health-Guide-Hydration-and-Common-Nutrient-Deficiencies.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PREVENTIVE CARE -->
+        <div>
+          <h3 style="margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;"><span>🛡️</span> Preventive Healthcare</h3>
+          <div class="grid-3">
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,#fffbea,#fef3c7);">
+                <img src="img-resources/vaccination.png" alt="Vaccination" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">Prevention</span>
+                <h4>Vaccination: What You Need to Know</h4>
+                <p>Understanding the importance of vaccination schedules for children and adults in Rwanda.</p>
+                <a href="resources/CareSphere-Health-Guide-Vaccination-What-You-Need-to-Know.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,#fffbea,#fef3c7);">
+                <img src="img-resources/hygiene.png" alt="Hygiene & Disease Prevention" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">Prevention</span>
+                <h4>Hygiene & Disease Prevention</h4>
+                <p>Simple but powerful hygiene practices that prevent the spread of common diseases.</p>
+                <a href="resources/CareSphere-Health-Guide-Hygiene-and-Disease-Prevention.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+            <div class="resource-card fade-in">
+              <div class="resource-card-img" style="background:linear-gradient(135deg,#fffbea,#fef3c7);">
+                <img src="img-resources/physical.png" alt="Physical Activity & Lifestyle Health" class="image" />
+              </div>
+              <div class="resource-card-body">
+                <span class="blog-tag">Prevention</span>
+                <h4>Physical Activity & Lifestyle Health</h4>
+                <p>The role of exercise and active lifestyle choices in preventing chronic diseases and improving wellbeing.</p>
+                <a href="resources/CareSphere-Health-Guide-Physical-Activity-and-Lifestyle-Health.pdf" class="read-more">Read Guide <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container">
+      <div class="cta-band fade-in" style="background:linear-gradient(135deg,var(--teal-dark),var(--teal));">
+        <h2>Need Personalized Health Advice?</h2>
+        <p>Our telemedicine service connects you with qualified healthcare professionals.</p>
+        <div class="btn-actions"><a href="services.html" class="btn btn-white">Book a Consultation</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES FROM ADMIN — dynamic -->
+  <section class="section bg-cream" id="adminResourcesSection" style="display:none">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">From Our Team</span>
+        <h2>Latest Health Resources</h2>
+        <p>New articles and guides published by the CareSphere team.</p>
+      </div>
+      <div class="grid-3" id="adminResourcesGrid"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="CareSphere" onerror="this.style.display='none'"/>Care<span class="accent" style="color:var(--teal-light);">Sphere</span></a>
+          <p>Improving access to inclusive, reliable, and affordable healthcare services for underserved communities.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/caresphare?s=21" class="social-link"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/gedeon-niyikomeye-643b71363?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Quick Links</h4><ul>
+          <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li><li><a href="community.html">Community Programs</a></li>
+          <li><a href="impact.html">Impact</a></li></ul></div>
+        <div class="footer-col"><h4>Resources</h4><ul>
+          <li><a href="resources.html">Health Resources</a></li><li><a href="blog.html">Blog & Insights</a></li>
+          <li><a href="members.html">Members</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-col"><h4>Get in Touch</h4>
+          <div class="contact-info-item"><i class="fa-solid fa-envelope"></i><a href="mailto:carespheretha@gmail.com" style="color:rgba(255,255,255,0.65);">carespheretha@gmail.com</a></div>
+          <div class="contact-info-item"><i class="fa-solid fa-phone"></i><a href="tel:+250 790 916 548" style="color:rgba(255,255,255,0.65);">+250 790 916 548</a></div>
+          <div class="contact-info-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/250790916548" style="color:rgba(255,255,255,0.65);">WhatsApp Us</a></div>
+          <div class="contact-info-item"><i class="fa-solid fa-location-dot"></i><span>Kigali, Rwanda</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 CareSphere — Powered by THRIVEWELL HEALTH ALLIANCE LTD</span><span>Empowering Communities Through Health</span></div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+  <script> window.chtlConfig = { chatbotId: "2516122934" } </script>
+<script async data-id="2516122934" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+  <script type="module">import("./js/tracker.js").catch(()=>{});
+    import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where, orderBy }
+                               from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    const FC={apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",authDomain:"carespher.firebaseapp.com",projectId:"carespher",storageBucket:"carespher.firebasestorage.app",messagingSenderId:"1063379902456",appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"};
+    const db = getFirestore(initializeApp(FC));
+    (async()=>{
+      try{
+        const snap = await getDocs(query(
+          collection(db,"resources"),
+          where("status","==","published"),
+          orderBy("createdAt","desc")
+        ));
+        const items = snap.docs.map(d=>({id:d.id,...d.data()}));
+        if(!items.length) return;
+        document.getElementById("adminResourcesSection").style.display="";
+        const catColors = {
+          "SRH":"#f0e8ff","Mental Health":"#e8f0ff","Nutrition":"#e8fff0",
+          "Preventive Care":"#e6f7f4","Disease Awareness":"#fff8e8"
+        };
+        const catText = {
+          "SRH":"#7c3aad","Mental Health":"#3b5bdb","Nutrition":"#2d8f5e",
+          "Preventive Care":"#0d6e6e","Disease Awareness":"#c9a84c"
+        };
+        document.getElementById("adminResourcesGrid").innerHTML = items.map(r=>{
+          const bg  = catColors[r.category] || "var(--mint)";
+          const tc  = catText[r.category]   || "var(--teal)";
+          const thumb = r.coverUrl
+            ? `<img src="${r.coverUrl}" style="width:100%;height:180px;object-fit:cover;border-radius:var(--radius-lg) var(--radius-lg) 0 0" alt="">`
+            : `<div style="background:${bg};height:100px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;display:flex;align-items:center;justify-content:center;font-size:2.5rem">📖</div>`;
+          const date = r.createdAt ? new Date(r.createdAt).toLocaleDateString("en-RW",{month:"short",year:"numeric"}) : "";
+          return `<div class="card fade-in" style="padding:0;overflow:hidden">
+            ${thumb}
+            <div style="padding:1.5rem">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem">
+                <span style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:${tc}">${r.category||"Resource"}</span>
+                <span style="font-size:0.75rem;color:var(--text-muted)">${r.type||"Article"}</span>
+              </div>
+              <h4 style="color:var(--teal-dark);margin-bottom:0.5rem;line-height:1.4">${r.title||"Untitled"}</h4>
+              <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:0.8rem">${(r.summary || (r.content||"").replace(/<[^>]*>/g,"")).slice(0,110)}…</p>
+              <a href="resource-article.html?id=${r.id}" style="display:inline-flex;align-items:center;gap:6px;color:var(--green);font-weight:600;font-size:0.88rem">
+                Read Article <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>`;
+        }).join("");
+      }catch(e){ console.error('[CareSphere Firestore]', e.message || e); }
+    })();
+  </script>
+</body>
+</html>
