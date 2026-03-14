@@ -13,7 +13,7 @@
   ],
   "env": {
     "IMAGEKIT_PUBLIC_KEY":   "public_Dm9o2L7td86DzeKvGQMW6hUNQN0=",
-    "IMAGEKIT_URL_ENDPOINT": "https://ik.imagekit.io/caresphere"
+    "IMAGEKIT_URL_ENDPOINT": "https://ik.imagekit.io/destinydriving"
   },
   "headers": [
     {
