@@ -19,9 +19,19 @@ export async function uploadToImageKit(file, folder = "uploads", fileName = null
   if (!file) throw new Error("No file provided");
 
   // 1. Get signed auth params from our Vercel function
-  const authRes = await fetch("/api/imagekit-auth");
-  if (!authRes.ok) throw new Error("Failed to get ImageKit auth token");
-  const { token, expire, signature, publicKey, urlEndpoint } = await authRes.json();
+  let authData;
+  try {
+    const authRes = await fetch("/api/imagekit-auth");
+    if (!authRes.ok) {
+      const text = await authRes.text().catch(() => authRes.status);
+      throw new Error(`Auth endpoint returned ${authRes.status}: ${text}`);
+    }
+    authData = await authRes.json();
+  } catch (e) {
+    throw new Error("Failed to get ImageKit auth token: " + e.message);
+  }
+
+  const { token, expire, signature, publicKey, urlEndpoint } = authData;
 
   // 2. Build the FormData payload
   const form = new FormData();
@@ -30,22 +40,31 @@ export async function uploadToImageKit(file, folder = "uploads", fileName = null
   form.append("folder",    `/caresphere/${folder}`);
   form.append("publicKey", publicKey);
   form.append("signature", signature);
-  form.append("expire",    expire);
+  form.append("expire",    String(expire));
   form.append("token",     token);
 
   // 3. POST directly to ImageKit's upload endpoint
-  const uploadRes = await fetch("https://upload.imagekit.io/api/v1/files/upload", {
-    method: "POST",
-    body:   form,
-  });
+  let uploadRes;
+  try {
+    uploadRes = await fetch("https://upload.imagekit.io/api/v1/files/upload", {
+      method: "POST",
+      body:   form,
+    });
+  } catch (e) {
+    throw new Error("Network error reaching ImageKit: " + e.message);
+  }
 
   if (!uploadRes.ok) {
-    const err = await uploadRes.json().catch(() => ({}));
-    throw new Error(err.message || "ImageKit upload failed");
+    let errMsg = `ImageKit upload failed (${uploadRes.status})`;
+    try {
+      const err = await uploadRes.json();
+      errMsg = err.message || err.error || JSON.stringify(err);
+    } catch (_) {}
+    throw new Error(errMsg);
   }
 
   const data = await uploadRes.json();
-  return data.url; // full CDN URL, e.g. https://ik.imagekit.io/caresphere/blogs/photo.jpg
+  return data.url;
 }
 
 /**
