@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Events — CareSphere Admin</title>
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><img src="../images/logo.png" alt="" onerror="this.style.display='none'"><span>Care<em>Sphere</em></span></div>
+    <div class="sidebar-label">Main</div>
+    <a href="index.html"     class="nav-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    <a href="blogs.html"     class="nav-item"><i class="fas fa-newspaper"></i> Blog Posts</a>
+    <a href="services.html"  class="nav-item"><i class="fas fa-hand-holding-medical"></i> Services</a>
+    <a href="events.html"    class="nav-item active"><i class="fas fa-calendar-days"></i> Events</a>
+    <a href="resources.html" class="nav-item"><i class="fas fa-book-medical"></i> Health Resources</a>
+    <div class="sidebar-label">Management</div>
+    <a href="team.html"      class="nav-item"><i class="fas fa-users"></i> Team Members</a>
+    <a href="analytics.html" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <div class="sidebar-footer">
+      <div class="sidebar-user"><div class="sidebar-avatar" id="sidebarAvatar">A</div><div class="sidebar-user-info"><div class="name" id="sidebarName">Admin</div><div class="role">Administrator</div></div></div>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-right-from-bracket"></i> Sign Out</button>
+    </div>
+  </aside>
+  <div class="main-content">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem"><button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button><span class="topbar-title">Events & Community Programs</span></div>
+      <div class="topbar-right"><button class="btn btn-green btn-sm" id="newBtn"><i class="fas fa-plus"></i> New Event</button></div>
+    </header>
+    <div class="page-body">
+      <div class="table-card">
+        <div class="table-header">
+          <h3>All Events</h3>
+          <div class="table-search">
+            <input type="text" id="searchInput" placeholder="Search events…">
+            <select id="filterStatus" style="padding:0.5rem;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;outline:none">
+              <option value="">All</option><option value="published">Published</option><option value="draft">Draft</option>
+            </select>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Cover</th><th>Event</th><th>Date</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="dataTable"><tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted)"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="mainModal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="modalTitle">New Event</h3><button class="modal-close" id="closeModal"><i class="fas fa-xmark"></i></button></div>
+    <div class="modal-body">
+      <div id="modalAlert" style="display:none" class="alert"></div>
+      <input type="hidden" id="editId">
+      <div class="form-group">
+        <label>Cover Image</label>
+        <div class="img-upload-zone" id="dropZone"><div class="upload-icon">🖼️</div><p>Click or drag to upload</p><input type="file" id="coverFile" accept="image/*"></div>
+        <div class="upload-progress"><div class="upload-progress-bar" id="uploadBar"></div></div>
+        <img id="coverPreview" class="img-preview" style="display:none">
+        <input type="hidden" id="coverUrl">
+      </div>
+      <div class="form-group"><label>Event Title *</label><input type="text" id="fTitle" placeholder="Event name…" required></div>
+      <div class="form-row">
+        <div class="form-group"><label>Event Date *</label><input type="date" id="fEventDate" required></div>
+        <div class="form-group"><label>Event Time</label><input type="time" id="fEventTime"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Location</label><input type="text" id="fLocation" placeholder="Kigali, Rwanda"></div>
+        <div class="form-group"><label>Target Audience</label><input type="text" id="fAudience" placeholder="Youth, All Welcome…"></div>
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select id="fType">
+          <option value="Health Campaign">Health Campaign</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Community Event">Community Event</option>
+          <option value="Youth Program">Youth Program</option>
+          <option value="Screening Day">Screening Day</option>
+          <option value="Awareness Drive">Awareness Drive</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Description *</label><textarea id="fDesc" rows="4" placeholder="Describe the event…"></textarea></div>
+      <div class="form-group"><label>Registration Link (optional)</label><input type="url" id="fRegLink" placeholder="https://…"></div>
+      <label class="toggle-wrap" style="margin-top:0.5rem">
+        <div class="toggle"><input type="checkbox" id="fPublished"><span class="toggle-slider"></span></div>
+        <span class="toggle-label">Publish this event</span>
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelBtn">Cancel</button>
+      <button class="btn btn-green" id="saveBtn"><i class="fas fa-floppy-disk"></i> Save Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header"><h3>Delete Event</h3><button class="modal-close" id="closeDeleteModal"><i class="fas fa-xmark"></i></button></div>
+    <div class="modal-body"><p>Delete <strong id="deleteTitle"></strong>? This cannot be undone.</p></div>
+    <div class="modal-footer"><button class="btn btn-ghost" id="cancelDeleteBtn">Cancel</button><button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash"></i> Delete</button></div>
+  </div>
+</div>
+<div id="toast-container"></div>
+
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, query, orderBy }
+                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut }
+                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { uploadToImageKit } from "../js/imagekit.js";
+
+const FC={apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",authDomain:"carespher.firebaseapp.com",projectId:"carespher",storageBucket:"carespher.firebasestorage.app",messagingSenderId:"1063379902456",appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"};
+const app=initializeApp(FC); const db=getFirestore(app); const auth=getAuth(app);
+
+onAuthStateChanged(auth,async(user)=>{
+  if(!user)return location.href="login.html";
+  const snap=await getDoc(doc(db,"admin_users",user.uid));
+  if(!snap.exists()){await signOut(auth);return location.href="login.html";}
+  const d=snap.data(); document.getElementById("sidebarName").textContent=`${d.firstName||""} ${d.lastName||""}`.trim();
+  document.getElementById("sidebarAvatar").textContent=(d.firstName||"A")[0].toUpperCase();
+  loadData();
+});
+document.getElementById("logoutBtn").addEventListener("click",async()=>{await signOut(auth);location.href="login.html";});
+document.getElementById("menuToggle").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+if(new URLSearchParams(location.search).get("new")==="1")openModal();
+
+let allItems=[]; let deleteTargetId=null;
+
+async function loadData(){
+  const snap=await getDocs(query(collection(db,"events"),orderBy("eventDate","desc")));
+  allItems=snap.docs.map(d=>({id:d.id,...d.data()}));
+  renderTable(allItems);
+}
+
+function renderTable(items){
+  const tbody=document.getElementById("dataTable");
+  if(!items.length){tbody.innerHTML=`<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📅</div><h3>No events yet</h3><p>Create your first event.</p></div></td></tr>`;return;}
+  tbody.innerHTML=items.map(p=>`<tr>
+    <td>${p.coverUrl?`<img src="${p.coverUrl}" class="td-thumb" alt="">`:''}</td>
+    <td><div class="td-title">${p.title||"Untitled"}</div><div class="td-meta">${p.type||""}</div></td>
+    <td class="td-meta">${p.eventDate||"—"}</td>
+    <td class="td-meta">${p.location||"—"}</td>
+    <td><span class="badge badge-${p.status==="published"?"published":"draft"}">${p.status||"draft"}</span></td>
+    <td><div class="td-actions">
+      <button class="btn btn-outline btn-sm" onclick="editItem('${p.id}')"><i class="fas fa-pen"></i></button>
+      <button class="btn btn-danger btn-sm"  onclick="confirmDelete('${p.id}','${(p.title||"").replace(/'/g,"\\'")}')"><i class="fas fa-trash"></i></button>
+    </div></td>
+  </tr>`).join("");
+}
+
+document.getElementById("searchInput").addEventListener("input",filter);
+document.getElementById("filterStatus").addEventListener("change",filter);
+function filter(){const q=document.getElementById("searchInput").value.toLowerCase();const s=document.getElementById("filterStatus").value;renderTable(allItems.filter(p=>(!q||(p.title||"").toLowerCase().includes(q))&&(!s||p.status===s)));}
+
+function openModal(item=null){
+  document.getElementById("modalTitle").textContent=item?"Edit Event":"New Event";
+  document.getElementById("editId").value=item?.id||"";
+  document.getElementById("fTitle").value=item?.title||"";
+  document.getElementById("fEventDate").value=item?.eventDate||"";
+  document.getElementById("fEventTime").value=item?.eventTime||"";
+  document.getElementById("fLocation").value=item?.location||"";
+  document.getElementById("fAudience").value=item?.audience||"";
+  document.getElementById("fType").value=item?.type||"Health Campaign";
+  document.getElementById("fDesc").value=item?.description||"";
+  document.getElementById("fRegLink").value=item?.registrationLink||"";
+  document.getElementById("fPublished").checked=item?.status==="published";
+  document.getElementById("coverUrl").value=item?.coverUrl||"";
+  document.getElementById("modalAlert").style.display="none";
+  if(item?.coverUrl){document.getElementById("coverPreview").src=item.coverUrl;document.getElementById("coverPreview").style.display="block";}
+  else document.getElementById("coverPreview").style.display="none";
+  document.getElementById("mainModal").classList.add("open");
+}
+window.editItem=(id)=>{const p=allItems.find(x=>x.id===id);if(p)openModal(p);};
+function closeModal(){document.getElementById("mainModal").classList.remove("open");}
+document.getElementById("closeModal").addEventListener("click",closeModal);
+document.getElementById("cancelBtn").addEventListener("click",closeModal);
+document.getElementById("newBtn").addEventListener("click",()=>openModal());
+
+// Image
+const zone=document.getElementById("dropZone"),input=document.getElementById("coverFile");
+zone.addEventListener("click",()=>input.click());
+zone.addEventListener("dragover",e=>{e.preventDefault();zone.classList.add("dragover");});
+zone.addEventListener("dragleave",()=>zone.classList.remove("dragover"));
+zone.addEventListener("drop",e=>{e.preventDefault();zone.classList.remove("dragover");handleFile(e.dataTransfer.files[0]);});
+input.addEventListener("change",()=>handleFile(input.files[0]));
+async function handleFile(file){
+  if(!file||file.size>5*1024*1024)return;
+  const bar=document.getElementById("uploadBar");bar.style.width="30%";
+  try{const url=await uploadToImageKit(file,"events");bar.style.width="100%";setTimeout(()=>bar.style.width="0",800);
+  document.getElementById("coverUrl").value=url;document.getElementById("coverPreview").src=url;document.getElementById("coverPreview").style.display="block";toast("Image uploaded ✓","success");}
+  catch(e){showAlert("Upload failed: "+e.message);bar.style.width="0";}
+}
+
+document.getElementById("saveBtn").addEventListener("click",async()=>{
+  const btn=document.getElementById("saveBtn");
+  const title=document.getElementById("fTitle").value.trim();
+  const desc=document.getElementById("fDesc").value.trim();
+  if(!title)return showAlert("Title is required.");
+  btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving…';
+  const id=document.getElementById("editId").value;
+  const data={title,eventDate:document.getElementById("fEventDate").value,eventTime:document.getElementById("fEventTime").value,location:document.getElementById("fLocation").value.trim(),audience:document.getElementById("fAudience").value.trim(),type:document.getElementById("fType").value,description:desc,registrationLink:document.getElementById("fRegLink").value.trim(),status:document.getElementById("fPublished").checked?"published":"draft",coverUrl:document.getElementById("coverUrl").value};
+  try{
+    if(id)await updateDoc(doc(db,"events",id),{...data,updatedAt:new Date().toISOString()});
+    else await addDoc(collection(db,"events"),{...data,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+    toast(id?"Event updated ✓":"Event created ✓","success");closeModal();await loadData();
+  }catch(e){showAlert("Error: "+e.message);}
+  btn.disabled=false;btn.innerHTML='<i class="fas fa-floppy-disk"></i> Save Event';
+});
+
+window.confirmDelete=(id,title)=>{deleteTargetId=id;document.getElementById("deleteTitle").textContent=title;document.getElementById("deleteModal").classList.add("open");};
+document.getElementById("closeDeleteModal").addEventListener("click",()=>document.getElementById("deleteModal").classList.remove("open"));
+document.getElementById("cancelDeleteBtn").addEventListener("click",()=>document.getElementById("deleteModal").classList.remove("open"));
+document.getElementById("confirmDeleteBtn").addEventListener("click",async()=>{
+  if(!deleteTargetId)return;
+  await deleteDoc(doc(db,"events",deleteTargetId));
+  document.getElementById("deleteModal").classList.remove("open");toast("Event deleted","default");await loadData();
+});
+
+function showAlert(msg){const a=document.getElementById("modalAlert");a.className="alert alert-error";a.innerHTML=`<i class="fas fa-circle-exclamation"></i><span>${msg}</span>`;a.style.display="flex";}
+function toast(msg,type="default"){const c=document.getElementById("toast-container");const t=document.createElement("div");t.className=`toast ${type}`;t.innerHTML=`<i class="fas fa-check-circle"></i> ${msg}`;c.appendChild(t);setTimeout(()=>{t.style.opacity="0";t.style.transition="all 0.3s";setTimeout(()=>t.remove(),300);},3500);}
+</script>
+</body>
+</html>

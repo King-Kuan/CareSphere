@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Blog Posts — CareSphere Admin</title>
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><img src="../images/logo.png" alt="" onerror="this.style.display='none'"><span>Care<em>Sphere</em></span></div>
+    <div class="sidebar-label">Main</div>
+    <a href="index.html"     class="nav-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    <a href="blogs.html"     class="nav-item active"><i class="fas fa-newspaper"></i> Blog Posts</a>
+    <a href="services.html"  class="nav-item"><i class="fas fa-hand-holding-medical"></i> Services</a>
+    <a href="events.html"    class="nav-item"><i class="fas fa-calendar-days"></i> Events</a>
+    <a href="resources.html" class="nav-item"><i class="fas fa-book-medical"></i> Health Resources</a>
+    <div class="sidebar-label">Management</div>
+    <a href="team.html"      class="nav-item"><i class="fas fa-users"></i> Team Members</a>
+    <a href="analytics.html" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <div class="sidebar-footer">
+      <div class="sidebar-user"><div class="sidebar-avatar" id="sidebarAvatar">A</div><div class="sidebar-user-info"><div class="name" id="sidebarName">Admin</div><div class="role">Administrator</div></div></div>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-right-from-bracket"></i> Sign Out</button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        <span class="topbar-title">Blog Posts</span>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-green btn-sm" id="newPostBtn"><i class="fas fa-plus"></i> New Post</button>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="table-card">
+        <div class="table-header">
+          <h3>All Blog Posts</h3>
+          <div class="table-search">
+            <input type="text" id="searchInput" placeholder="Search posts…">
+            <select id="filterStatus" style="padding:0.5rem;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;outline:none">
+              <option value="">All Status</option>
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </select>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Cover</th><th>Title</th><th>Category</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="blogsTable"><tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted)"><i class="fas fa-spinner fa-spin"></i> Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POST MODAL -->
+<div class="modal-overlay" id="postModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">New Blog Post</h3>
+      <button class="modal-close" id="closeModal"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div id="modalAlert" style="display:none" class="alert"></div>
+      <input type="hidden" id="editId">
+
+      <div class="form-group">
+        <label>Cover Image</label>
+        <div class="img-upload-zone" id="dropZone">
+          <div class="upload-icon">🖼️</div>
+          <p>Click or drag & drop an image<br><small>JPG, PNG, WebP — max 5MB</small></p>
+          <input type="file" id="coverFile" accept="image/*">
+        </div>
+        <div class="upload-progress"><div class="upload-progress-bar" id="uploadBar"></div></div>
+        <img id="coverPreview" class="img-preview" style="display:none">
+        <input type="hidden" id="coverUrl">
+      </div>
+
+      <div class="form-group">
+        <label>Title *</label>
+        <input type="text" id="postTitle" placeholder="Article title…" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="postCategory">
+            <option value="Health Tips">Health Tips</option>
+            <option value="Community Stories">Community Stories</option>
+            <option value="Research Insights">Research Insights</option>
+            <option value="Public Health">Public Health</option>
+            <option value="Mental Health">Mental Health</option>
+            <option value="Nutrition">Nutrition</option>
+            <option value="SRH">Sexual & Reproductive Health</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Author</label>
+          <input type="text" id="postAuthor" placeholder="Author name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Excerpt (short summary)</label>
+        <textarea id="postExcerpt" rows="2" placeholder="One-paragraph summary shown on the blog listing page…"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Content *</label>
+        <div class="editor-toolbar" id="toolbar">
+          <button type="button" data-cmd="bold"        title="Bold">      <b>B</b></button>
+          <button type="button" data-cmd="italic"      title="Italic">    <i>I</i></button>
+          <button type="button" data-cmd="underline"   title="Underline"> <u>U</u></button>
+          <button type="button" data-cmd="insertUnorderedList" title="Bullets"><i class="fas fa-list-ul"></i></button>
+          <button type="button" data-cmd="insertOrderedList"   title="Numbered"><i class="fas fa-list-ol"></i></button>
+          <button type="button" data-cmd="formatBlock" data-val="h2" title="Heading">H2</button>
+          <button type="button" data-cmd="formatBlock" data-val="h3" title="Subheading">H3</button>
+          <button type="button" data-cmd="formatBlock" data-val="p"  title="Paragraph">¶</button>
+        </div>
+        <div class="editor-area" id="postContent" contenteditable="true" data-placeholder="Write the full article here…"></div>
+      </div>
+      <div class="form-group">
+        <label>Tags</label>
+        <div class="tags-input-wrap" id="tagsWrap">
+          <input type="text" id="tagInput" placeholder="Type tag + Enter">
+        </div>
+        <input type="hidden" id="tagsValue">
+      </div>
+      <div class="form-group">
+        <label>Slug (URL)</label>
+        <input type="text" id="postSlug" placeholder="auto-generated-from-title">
+      </div>
+      <label class="toggle-wrap">
+        <div class="toggle"><input type="checkbox" id="postPublished"><span class="toggle-slider"></span></div>
+        <span class="toggle-label">Publish immediately</span>
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelBtn">Cancel</button>
+      <button class="btn btn-green" id="saveBtn"><i class="fas fa-floppy-disk"></i> Save Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header"><h3>Delete Post</h3><button class="modal-close" id="closeDeleteModal"><i class="fas fa-xmark"></i></button></div>
+    <div class="modal-body">
+      <p>Are you sure you want to delete <strong id="deleteTitle"></strong>? This cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelDeleteBtn">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script type="module">
+import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, setDoc, addDoc, updateDoc, deleteDoc, orderBy, query }
+                           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut }
+                           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { uploadToImageKit } from "../js/imagekit.js";
+
+const FC = {apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",authDomain:"carespher.firebaseapp.com",projectId:"carespher",storageBucket:"carespher.firebasestorage.app",messagingSenderId:"1063379902456",appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"};
+const app  = initializeApp(FC);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+// Auth guard
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return location.href = "login.html";
+  const snap = await (await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js")).getDoc(doc(db,"admin_users",user.uid));
+  if (!snap.exists()) { await signOut(auth); return location.href="login.html"; }
+  const d = snap.data();
+  document.getElementById("sidebarName").textContent = `${d.firstName||""} ${d.lastName||""}`.trim();
+  document.getElementById("sidebarAvatar").textContent = (d.firstName||"A")[0].toUpperCase();
+  loadPosts();
+});
+
+document.getElementById("logoutBtn").addEventListener("click",async()=>{await signOut(auth);location.href="login.html";});
+document.getElementById("menuToggle").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+
+// Auto-open new modal if ?new=1
+if (new URLSearchParams(location.search).get("new")==="1") openModal();
+
+let allPosts = [];
+let deleteTargetId = null;
+const tags = [];
+
+// ── Load posts ────────────────────────────────────────────
+async function loadPosts() {
+  const snap = await getDocs(query(collection(db,"blogs"), orderBy("createdAt","desc")));
+  allPosts = snap.docs.map(d=>({id:d.id,...d.data()}));
+  renderTable(allPosts);
+}
+
+function renderTable(posts) {
+  const tbody = document.getElementById("blogsTable");
+  if (!posts.length) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">✍️</div><h3>No posts yet</h3><p>Create your first blog post.</p><button class="btn btn-green" onclick="document.getElementById('newPostBtn').click()"><i class="fas fa-plus"></i> New Post</button></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = posts.map(p=>`
+    <tr>
+      <td>${p.coverUrl?`<img src="${p.coverUrl}" class="td-thumb" alt="">`:'<div class="td-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--text-muted)">🖼️</div>'}</td>
+      <td><div class="td-title">${p.title||"Untitled"}</div><div class="td-meta">${p.category||""} ${p.author?"· "+p.author:""}</div></td>
+      <td><span style="font-size:0.85rem;color:var(--text-muted)">${p.category||"—"}</span></td>
+      <td><span class="badge badge-${p.status==="published"?"published":"draft"}">${p.status||"draft"}</span></td>
+      <td class="td-meta">${(p.createdAt||"").slice(0,10)}</td>
+      <td><div class="td-actions">
+        <button class="btn btn-outline btn-sm" onclick="editPost('${p.id}')"><i class="fas fa-pen"></i></button>
+        <button class="btn btn-danger btn-sm"  onclick="confirmDelete('${p.id}','${(p.title||"").replace(/'/g,"\\'")}')"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`).join("");
+}
+
+// Search + filter
+document.getElementById("searchInput").addEventListener("input", filterPosts);
+document.getElementById("filterStatus").addEventListener("change", filterPosts);
+function filterPosts() {
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const s = document.getElementById("filterStatus").value;
+  renderTable(allPosts.filter(p=>
+    (!q || (p.title||"").toLowerCase().includes(q) || (p.category||"").toLowerCase().includes(q)) &&
+    (!s || p.status===s)
+  ));
+}
+
+// ── Modal ─────────────────────────────────────────────────
+function openModal(post=null) {
+  const modal = document.getElementById("postModal");
+  document.getElementById("modalTitle").textContent = post ? "Edit Blog Post" : "New Blog Post";
+  document.getElementById("editId").value       = post?.id || "";
+  document.getElementById("postTitle").value    = post?.title || "";
+  document.getElementById("postCategory").value = post?.category || "Health Tips";
+  document.getElementById("postAuthor").value   = post?.author || "";
+  document.getElementById("postExcerpt").value  = post?.excerpt || "";
+  document.getElementById("postContent").innerHTML = post?.content || "";
+  document.getElementById("postSlug").value     = post?.slug || "";
+  document.getElementById("postPublished").checked = post?.status==="published";
+  document.getElementById("coverUrl").value     = post?.coverUrl || "";
+  document.getElementById("modalAlert").style.display = "none";
+  if (post?.coverUrl) {
+    document.getElementById("coverPreview").src = post.coverUrl;
+    document.getElementById("coverPreview").style.display = "block";
+  } else {
+    document.getElementById("coverPreview").style.display = "none";
+  }
+  // Tags
+  tags.length = 0;
+  (post?.tags||[]).forEach(t=>addTag(t));
+  modal.classList.add("open");
+}
+window.editPost = (id) => { const p = allPosts.find(x=>x.id===id); if(p) openModal(p); };
+
+function closeModal() { document.getElementById("postModal").classList.remove("open"); }
+document.getElementById("closeModal").addEventListener("click", closeModal);
+document.getElementById("cancelBtn").addEventListener("click",  closeModal);
+document.getElementById("newPostBtn").addEventListener("click", ()=>openModal());
+
+// Auto-slug from title
+document.getElementById("postTitle").addEventListener("input", (e) => {
+  if (!document.getElementById("editId").value)
+    document.getElementById("postSlug").value = slugify(e.target.value);
+});
+function slugify(s){return s.toLowerCase().trim().replace(/[^\w\s-]/g,"").replace(/[\s_-]+/g,"-").replace(/^-+|-+$/g,"");}
+
+// Rich text toolbar
+document.getElementById("toolbar").querySelectorAll("button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const cmd = btn.dataset.cmd, val = btn.dataset.val||null;
+    document.execCommand(cmd, false, val);
+    document.getElementById("postContent").focus();
+  });
+});
+
+// Tags input
+function addTag(text) {
+  text = text.trim();
+  if (!text || tags.includes(text)) return;
+  tags.push(text);
+  const wrap = document.getElementById("tagsWrap");
+  const chip = document.createElement("span");
+  chip.className = "tag-chip";
+  chip.innerHTML = `${text}<button type="button" onclick="removeTag('${text}',this)">×</button>`;
+  wrap.insertBefore(chip, document.getElementById("tagInput"));
+  document.getElementById("tagsValue").value = JSON.stringify(tags);
+}
+window.removeTag = (t, btn) => { tags.splice(tags.indexOf(t),1); btn.parentElement.remove(); document.getElementById("tagsValue").value=JSON.stringify(tags); };
+document.getElementById("tagInput").addEventListener("keydown",(e)=>{ if(e.key==="Enter"||e.key===","){ e.preventDefault(); addTag(e.target.value); e.target.value=""; } });
+
+// Image upload
+function setupDropZone() {
+  const zone = document.getElementById("dropZone");
+  const input = document.getElementById("coverFile");
+  zone.addEventListener("click", ()=>input.click());
+  zone.addEventListener("dragover", e=>{e.preventDefault();zone.classList.add("dragover");});
+  zone.addEventListener("dragleave", ()=>zone.classList.remove("dragover"));
+  zone.addEventListener("drop", e=>{e.preventDefault();zone.classList.remove("dragover");handleFile(e.dataTransfer.files[0]);});
+  input.addEventListener("change", ()=>handleFile(input.files[0]));
+}
+async function handleFile(file) {
+  if (!file) return;
+  if (file.size > 5*1024*1024) return showModalAlert("Image must be under 5MB.");
+  const bar = document.getElementById("uploadBar");
+  bar.style.width = "30%";
+  try {
+    const url = await uploadToImageKit(file, "blogs");
+    bar.style.width = "100%";
+    setTimeout(()=>bar.style.width="0",800);
+    document.getElementById("coverUrl").value = url;
+    document.getElementById("coverPreview").src = url;
+    document.getElementById("coverPreview").style.display = "block";
+    toast("Image uploaded ✓", "success");
+  } catch(e) { showModalAlert("Upload failed: "+e.message); bar.style.width="0"; }
+}
+setupDropZone();
+
+// Save
+document.getElementById("saveBtn").addEventListener("click", async ()=>{
+  const btn = document.getElementById("saveBtn");
+  const title   = document.getElementById("postTitle").value.trim();
+  const content = document.getElementById("postContent").innerHTML.trim();
+  if (!title) return showModalAlert("Title is required.");
+  if (!content || content==="<br>") return showModalAlert("Content is required.");
+
+  btn.disabled=true; btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving…';
+  const id = document.getElementById("editId").value;
+  const data = {
+    title,
+    category:   document.getElementById("postCategory").value,
+    author:     document.getElementById("postAuthor").value.trim(),
+    excerpt:    document.getElementById("postExcerpt").value.trim(),
+    content,
+    slug:       document.getElementById("postSlug").value || slugify(title),
+    status:     document.getElementById("postPublished").checked ? "published" : "draft",
+    coverUrl:   document.getElementById("coverUrl").value,
+    tags:       tags.slice(),
+  };
+  try {
+    if (id) {
+      await updateDoc(doc(db,"blogs",id),{...data,updatedAt:new Date().toISOString()});
+      toast("Post updated ✓","success");
+    } else {
+      await addDoc(collection(db,"blogs"),{...data,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+      toast("Post created ✓","success");
+    }
+    closeModal(); await loadPosts();
+  } catch(e){ showModalAlert("Error: "+e.message); }
+  btn.disabled=false; btn.innerHTML='<i class="fas fa-floppy-disk"></i> Save Post';
+});
+
+// Delete
+window.confirmDelete = (id, title) => {
+  deleteTargetId = id;
+  document.getElementById("deleteTitle").textContent = title;
+  document.getElementById("deleteModal").classList.add("open");
+};
+document.getElementById("closeDeleteModal").addEventListener("click",()=>document.getElementById("deleteModal").classList.remove("open"));
+document.getElementById("cancelDeleteBtn").addEventListener("click",()=>document.getElementById("deleteModal").classList.remove("open"));
+document.getElementById("confirmDeleteBtn").addEventListener("click", async ()=>{
+  if (!deleteTargetId) return;
+  await deleteDoc(doc(db,"blogs",deleteTargetId));
+  document.getElementById("deleteModal").classList.remove("open");
+  toast("Post deleted","default"); await loadPosts();
+});
+
+function showModalAlert(msg) {
+  const a = document.getElementById("modalAlert");
+  a.className="alert alert-error";
+  a.innerHTML=`<i class="fas fa-circle-exclamation"></i><span>${msg}</span>`;
+  a.style.display="flex"; a.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function toast(msg,type="default"){
+  const c=document.getElementById("toast-container");
+  const t=document.createElement("div");
+  t.className=`toast ${type}`;
+  t.innerHTML=`<i class="fas fa-${type==="success"?"check-circle":type==="error"?"circle-exclamation":"info-circle"}"></i> ${msg}`;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.opacity="0";t.style.transform="translateX(30px)";t.style.transition="all 0.3s";setTimeout(()=>t.remove(),300);},3500);
+}
+</script>
+</body>
+</html>

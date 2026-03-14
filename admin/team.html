@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Team Members — CareSphere Admin</title>
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;padding:1.5rem}
+.team-admin-card{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);overflow:hidden;transition:var(--trans)}
+.team-admin-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.team-card-photo{width:100%;height:200px;object-fit:cover;background:linear-gradient(135deg,var(--teal-dark),var(--teal));display:flex;align-items:center;justify-content:center;font-size:4rem;color:rgba(255,255,255,0.2)}
+.team-card-body{padding:1.2rem}
+.team-card-body h4{color:var(--teal-dark);margin-bottom:0.2rem}
+.team-card-role{font-size:0.78rem;color:var(--teal-mid);font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.6rem}
+.team-card-actions{display:flex;gap:0.5rem;margin-top:0.8rem}
+.soon-chip{background:var(--warn-pale);color:var(--warn);font-size:0.72rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:50px;margin-bottom:0.5rem;display:inline-block}
+</style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><img src="../images/logo.png" alt="" onerror="this.style.display='none'"><span>Care<em>Sphere</em></span></div>
+    <div class="sidebar-label">Main</div>
+    <a href="index.html"     class="nav-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    <a href="blogs.html"     class="nav-item"><i class="fas fa-newspaper"></i> Blog Posts</a>
+    <a href="services.html"  class="nav-item"><i class="fas fa-hand-holding-medical"></i> Services</a>
+    <a href="events.html"    class="nav-item"><i class="fas fa-calendar-days"></i> Events</a>
+    <a href="resources.html" class="nav-item"><i class="fas fa-book-medical"></i> Health Resources</a>
+    <div class="sidebar-label">Management</div>
+    <a href="team.html"      class="nav-item active"><i class="fas fa-users"></i> Team Members</a>
+    <a href="analytics.html" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <div class="sidebar-footer">
+      <div class="sidebar-user"><div class="sidebar-avatar" id="sidebarAvatar">A</div><div class="sidebar-user-info"><div class="name" id="sidebarName">Admin</div><div class="role">Administrator</div></div></div>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-right-from-bracket"></i> Sign Out</button>
+    </div>
+  </aside>
+  <div class="main-content">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem"><button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button><span class="topbar-title">Team Members</span></div>
+      <div class="topbar-right"><button class="btn btn-green btn-sm" id="newBtn"><i class="fas fa-plus"></i> Add Member</button></div>
+    </header>
+    <div class="page-body">
+      <div class="table-card">
+        <div class="table-header"><h3>All Team Members</h3></div>
+        <div class="team-grid" id="teamGrid"><div style="text-align:center;padding:3rem;color:var(--text-muted);grid-column:1/-1"><i class="fas fa-spinner fa-spin"></i> Loading…</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="mainModal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="modalTitle">Add Team Member</h3><button class="modal-close" id="closeModal"><i class="fas fa-xmark"></i></button></div>
+    <div class="modal-body">
+      <div id="modalAlert" style="display:none" class="alert"></div>
+      <input type="hidden" id="editId">
+      <div class="form-group">
+        <label>Profile Photo</label>
+        <div class="img-upload-zone" id="dropZone"><div class="upload-icon">👤</div><p>Click or drag to upload photo</p><input type="file" id="photoFile" accept="image/*"></div>
+        <div class="upload-progress"><div class="upload-progress-bar" id="uploadBar"></div></div>
+        <img id="photoPreview" class="img-preview" style="display:none;border-radius:50%;width:100px;height:100px;object-fit:cover;margin:0.8rem auto">
+        <input type="hidden" id="photoUrl">
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name *</label><input type="text" id="fFirst" required></div>
+        <div class="form-group"><label>Last Name *</label><input type="text" id="fLast" required></div>
+      </div>
+      <div class="form-group"><label>Role / Title *</label><input type="text" id="fRole" placeholder="e.g. Chief Operations Officer" required></div>
+      <div class="form-group"><label>Short Bio</label><textarea id="fBio" rows="3" placeholder="2-3 sentence professional bio…"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>Email</label><input type="email" id="fEmail" placeholder="name@example.com"></div>
+        <div class="form-group"><label>Display Order</label><input type="number" id="fOrder" value="1" min="1"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>LinkedIn URL</label><input type="url" id="fLinkedIn" placeholder="https://linkedin.com/in/…"></div>
+        <div class="form-group"><label>Twitter/X URL</label><input type="url" id="fTwitter" placeholder="https://x.com/…"></div>
+      </div>
+      <label class="toggle-wrap" style="margin-bottom:0.8rem">
+        <div class="toggle"><input type="checkbox" id="fComingSoon"><span class="toggle-slider"></span></div>
+        <span class="toggle-label">Mark as "Coming Soon" (position not yet filled)</span>
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelBtn">Cancel</button>
+      <button class="btn btn-green" id="saveBtn"><i class="fas fa-floppy-disk"></i> Save Member</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header"><h3>Remove Member</h3><button class="modal-close" id="closeDeleteModal"><i class="fas fa-xmark"></i></button></div>
+    <div class="modal-body"><p>Remove <strong id="deleteTitle"></strong> from the team?</p></div>
+    <div class="modal-footer"><button class="btn btn-ghost" id="cancelDeleteBtn">Cancel</button><button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash"></i> Remove</button></div>
+  </div>
+</div>
+<div id="toast-container"></div>
+
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, query, orderBy }
+                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut }
+                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { uploadToImageKit } from "../js/imagekit.js";
+
+const FC={apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",authDomain:"carespher.firebaseapp.com",projectId:"carespher",storageBucket:"carespher.firebasestorage.app",messagingSenderId:"1063379902456",appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"};
+const app=initializeApp(FC);const db=getFirestore(app);const auth=getAuth(app);
+
+onAuthStateChanged(auth,async(user)=>{
+  if(!user)return location.href="login.html";
+  const snap=await getDoc(doc(db,"admin_users",user.uid));
+  if(!snap.exists()){await signOut(auth);return location.href="login.html";}
+  const d=snap.data();document.getElementById("sidebarName").textContent=`${d.firstName||""} ${d.lastName||""}`.trim();
+  document.getElementById("sidebarAvatar").textContent=(d.firstName||"A")[0].toUpperCase();loadData();
+});
+document.getElementById("logoutBtn").addEventListener("click",async()=>{await signOut(auth);location.href="login.html";});
+document.getElementById("menuToggle").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+if(new URLSearchParams(location.search).get("new")==="1")openModal();
+
+let allItems=[],deleteTargetId=null;
+
+async function loadData(){
+  const snap=await getDocs(query(collection(db,"team_members"),orderBy("order","asc")));
+  allItems=snap.docs.map(d=>({id:d.id,...d.data()}));renderGrid(allItems);
+}
+
+function renderGrid(items){
+  const grid=document.getElementById("teamGrid");
+  if(!items.length){grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">👥</div><h3>No team members yet</h3><p>Add your first team member.</p></div>`;return;}
+  grid.innerHTML=items.map(p=>`
+    <div class="team-admin-card">
+      ${p.photoUrl?`<img src="${p.photoUrl}" class="team-card-photo" alt="">`:`<div class="team-card-photo">${p.comingSoon?"🙋":"👤"}</div>`}
+      <div class="team-card-body">
+        ${p.comingSoon?`<span class="soon-chip">Position Open</span>`:""}
+        <h4>${p.firstName||""} ${p.lastName||""}</h4>
+        <div class="team-card-role">${p.role||""}</div>
+        <p style="font-size:0.83rem;color:var(--text-muted);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${p.bio||""}</p>
+        <div class="team-card-actions">
+          <button class="btn btn-outline btn-sm" style="flex:1" onclick="editItem('${p.id}')"><i class="fas fa-pen"></i> Edit</button>
+          <button class="btn btn-danger btn-sm"  onclick="confirmDelete('${p.id}','${(p.firstName+" "+(p.lastName||"")).trim().replace(/'/g,"\\'")}')"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function openModal(item=null){
+  document.getElementById("modalTitle").textContent=item?"Edit Team Member":"Add Team Member";
+  document.getElementById("editId").value=item?.id||"";
+  document.getElementById("fFirst").value=item?.firstName||"";
+  document.getElementById("fLast").value=item?.lastName||"";
+  document.getElementById("fRole").value=item?.role||"";
+  document.getElementById("fBio").value=item?.bio||"";
+  document.getElementById("fEmail").value=item?.email||"";
+  document.getElementById("fOrder").value=item?.order||1;
+  document.getElementById("fLinkedIn").value=item?.linkedIn||"";
+  document.getElementById("fTwitter").value=item?.twitter||"";
+  document.getElementById("fComingSoon").checked=item?.comingSoon||false;
+  document.getElementById("photoUrl").value=item?.photoUrl||"";
+  document.getElementById("modalAlert").style.display="none";
+  if(item?.photoUrl){document.getElementById("photoPreview").src=item.photoUrl;document.getElementById("photoPreview").style.display="block";}
+  else document.getElementById("photoPreview").style.display="none";
+  document.getElementById("mainModal").classList.add("open");
+}
+window.editItem=(id)=>{const p=allItems.find(x=>x.id===id);if(p)openModal(p);};
+document.getElementById("closeModal").addEventListener("click",()=>document.getElementById("mainModal").classList.remove("open"));
+document.getElementById("cancelBtn").addEventListener("click",()=>document.getElementById("mainModal").classList.remove("open"));
+document.getElementById("newBtn").addEventListener("click",()=>openModal());
+
+const zone=document.getElementById("dropZone"),input=document.getElementById("photoFile");
+zone.addEventListener("click",()=>input.click());
+zone.addEventListener("dragover",e=>{e.preventDefault();zone.classList.add("dragover");});
+zone.addEventListener("dragleave",()=>zone.classList.remove("dragover"));
+zone.addEventListener("drop",e=>{e.preventDefault();zone.classList.remove("dragover");handleFile(e.dataTransfer.files[0]);});
+input.addEventListener("change",()=>handleFile(input.files[0]));
+async function handleFile(file){if(!file)return;const bar=document.getElementById("uploadBar");bar.style.width="30%";try{const url=await uploadToImageKit(file,"team");bar.style.width="100%";setTimeout(()=>bar.style.width="0",800);document.getElementById("photoUrl").value=url;document.getElementById("photoPreview").src=url;document.getElementById("photoPreview").style.display="block";toast("Photo uploaded ✓","success");}catch(e){showAlert("Upload failed: "+e.message);bar.style.width="0";}}
+
+document.getElementById("saveBtn").addEventListener("click",async()=>{
+  const btn=document.getElementById("saveBtn");
+  const first=document.getElementById("fFirst").value.trim();
+  const last=document.getElementById("fLast").value.trim();
+  const role=document.getElementById("fRole").value.trim();
+  if(!first||!role)return showAlert("First name and role are required.");
+  btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving…';
+  const id=document.getElementById("editId").value;
+  const data={firstName:first,lastName:last,role,bio:document.getElementById("fBio").value.trim(),email:document.getElementById("fEmail").value.trim(),order:parseInt(document.getElementById("fOrder").value)||1,linkedIn:document.getElementById("fLinkedIn").value.trim(),twitter:document.getElementById("fTwitter").value.trim(),comingSoon:document.getElementById("fComingSoon").checked,photoUrl:document.getElementById("photoUrl").value};
+  try{
+    if(id)await updateDoc(doc(db,"team_members",id),{...data,updatedAt:new Date().toISOString()});
+    else await addDoc(collection(db,"team_members"),{...data,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+    toast("Saved ✓","success");document.getElementById("mainModal").classList.remove("open");await loadData();
+  }catch(e){showAlert("Error: "+e.message);}
+  btn.disabled=false;btn.innerHTML='<i class="fas fa-floppy-disk"></i> Save Member';
+});
+
+window.confirmDelete=(id,name)=>{deleteTargetId=id;document.getElementById("deleteTitle").textContent=name;document.getElementById("deleteModal").classList.add("open");};
+document.getElementById("closeDeleteModal").addEventListener("click",()=>document.getElementById("deleteModal").classList.remove("open"));
+document.getElementById("cancelDeleteBtn").addEventListener("click",()=>document.getElementById("deleteModal").classList.remove("open"));
+document.getElementById("confirmDeleteBtn").addEventListener("click",async()=>{if(!deleteTargetId)return;await deleteDoc(doc(db,"team_members",deleteTargetId));document.getElementById("deleteModal").classList.remove("open");toast("Removed");await loadData();});
+
+function showAlert(msg){const a=document.getElementById("modalAlert");a.className="alert alert-error";a.innerHTML=`<i class="fas fa-circle-exclamation"></i><span>${msg}</span>`;a.style.display="flex";}
+function toast(msg,type="default"){const c=document.getElementById("toast-container");const t=document.createElement("div");t.className=`toast ${type}`;t.innerHTML=`<i class="fas fa-check-circle"></i> ${msg}`;c.appendChild(t);setTimeout(()=>{t.style.opacity="0";t.style.transition="all 0.3s";setTimeout(()=>t.remove(),300);},3500);}
+</script>
+</body>
+</html>

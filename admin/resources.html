@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Health Resources — CareSphere Admin</title>
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><img src="../images/logo.png" alt="" onerror="this.style.display='none'"><span>Care<em>Sphere</em></span></div>
+    <div class="sidebar-label">Main</div>
+    <a href="index.html"     class="nav-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    <a href="blogs.html"     class="nav-item"><i class="fas fa-newspaper"></i> Blog Posts</a>
+    <a href="services.html"  class="nav-item"><i class="fas fa-hand-holding-medical"></i> Services</a>
+    <a href="events.html"    class="nav-item"><i class="fas fa-calendar-days"></i> Events</a>
+    <a href="resources.html" class="nav-item active"><i class="fas fa-book-medical"></i> Health Resources</a>
+    <div class="sidebar-label">Management</div>
+    <a href="team.html"      class="nav-item"><i class="fas fa-users"></i> Team Members</a>
+    <a href="analytics.html" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <div class="sidebar-footer">
+      <div class="sidebar-user"><div class="sidebar-avatar" id="sidebarAvatar">A</div><div class="sidebar-user-info"><div class="name" id="sidebarName">Admin</div><div class="role">Administrator</div></div></div>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-right-from-bracket"></i> Sign Out</button>
+    </div>
+  </aside>
+  <div class="main-content">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem"><button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button><span class="topbar-title">Health Resources</span></div>
+      <div class="topbar-right"><button class="btn btn-green btn-sm" id="newBtn"><i class="fas fa-plus"></i> New Resource</button></div>
+    </header>
+    <div class="page-body">
+      <div class="table-card">
+        <div class="table-header"><h3>All Health Resources</h3>
+          <div class="table-search">
+            <input type="text" id="searchInput" placeholder="Search resources…">
+            <select id="filterCat" style="padding:0.5rem;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;outline:none">
+              <option value="">All Categories</option>
+              <option value="SRH">SRH</option>
+              <option value="Mental Health">Mental Health</option>
+              <option value="Nutrition">Nutrition</option>
+              <option value="Preventive Care">Preventive Care</option>
+              <option value="Disease Awareness">Disease Awareness</option>
+            </select>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Title</th><th>Category</th><th>Type</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="dataTable"><tr><td colspan="6" style="text-align:center;padding:3rem;color:var(--text-muted)"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="mainModal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="modalTitle">New Health Resource</h3><button class="modal-close" id="closeModal"><i class="fas fa-xmark"></i></button></div>
+    <div class="modal-body">
+      <div id="modalAlert" style="display:none" class="alert"></div>
+      <input type="hidden" id="editId">
+      <div class="form-group">
+        <label>Cover Image</label>
+        <div class="img-upload-zone" id="dropZone"><div class="upload-icon">🖼️</div><p>Click or drag to upload</p><input type="file" id="coverFile" accept="image/*"></div>
+        <div class="upload-progress"><div class="upload-progress-bar" id="uploadBar"></div></div>
+        <img id="coverPreview" class="img-preview" style="display:none">
+        <input type="hidden" id="coverUrl">
+      </div>
+      <div class="form-group"><label>Title *</label><input type="text" id="fTitle" placeholder="Resource title…" required></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="fCategory">
+            <option value="SRH">Sexual & Reproductive Health</option>
+            <option value="Mental Health">Mental Health</option>
+            <option value="Nutrition">Nutrition</option>
+            <option value="Preventive Care">Preventive Care</option>
+            <option value="Disease Awareness">Disease Awareness</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Resource Type</label>
+          <select id="fType">
+            <option value="Article">Article</option>
+            <option value="Guide">Guide</option>
+            <option value="Tip Sheet">Tip Sheet</option>
+            <option value="FAQ">FAQ</option>
+            <option value="Infographic">Infographic</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Summary</label><textarea id="fSummary" rows="2" placeholder="One-paragraph summary…"></textarea></div>
+      <div class="form-group">
+        <label>Content *</label>
+        <div class="editor-toolbar" id="toolbar">
+          <button type="button" data-cmd="bold"><b>B</b></button>
+          <button type="button" data-cmd="italic"><i>I</i></button>
+          <button type="button" data-cmd="insertUnorderedList"><i class="fas fa-list-ul"></i></button>
+          <button type="button" data-cmd="insertOrderedList"><i class="fas fa-list-ol"></i></button>
+          <button type="button" data-cmd="formatBlock" data-val="h3">H3</button>
+          <button type="button" data-cmd="formatBlock" data-val="p">¶</button>
+        </div>
+        <div class="editor-area" id="fContent" contenteditable="true"></div>
+      </div>
+      <label class="toggle-wrap">
+        <div class="toggle"><input type="checkbox" id="fPublished"><span class="toggle-slider"></span></div>
+        <span class="toggle-label">Publish this resource</span>
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelBtn">Cancel</button>
+      <button class="btn btn-green" id="saveBtn"><i class="fas fa-floppy-disk"></i> Save Resource</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header"><h3>Delete Resource</h3><button class="modal-close" id="closeDeleteModal"><i class="fas fa-xmark"></i></button></div>
+    <div class="modal-body"><p>Delete <strong id="deleteTitle"></strong>?</p></div>
+    <div class="modal-footer"><button class="btn btn-ghost" id="cancelDeleteBtn">Cancel</button><button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash"></i> Delete</button></div>
+  </div>
+</div>
+<div id="toast-container"></div>
+
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, query, orderBy }
+                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut }
+                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { uploadToImageKit } from "../js/imagekit.js";
+
+const FC={apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",authDomain:"carespher.firebaseapp.com",projectId:"carespher",storageBucket:"carespher.firebasestorage.app",messagingSenderId:"1063379902456",appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"};
+const app=initializeApp(FC);const db=getFirestore(app);const auth=getAuth(app);
+
+onAuthStateChanged(auth,async(user)=>{
+  if(!user)return location.href="login.html";
+  const snap=await getDoc(doc(db,"admin_users",user.uid));
+  if(!snap.exists()){await signOut(auth);return location.href="login.html";}
+  const d=snap.data();document.getElementById("sidebarName").textContent=`${d.firstName||""} ${d.lastName||""}`.trim();
+  document.getElementById("sidebarAvatar").textContent=(d.firstName||"A")[0].toUpperCase();loadData();
+});
+document.getElementById("logoutBtn").addEventListener("click",async()=>{await signOut(auth);location.href="login.html";});
+document.getElementById("menuToggle").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+if(new URLSearchParams(location.search).get("new")==="1")openModal();
+
+let allItems=[],deleteTargetId=null;
+
+async function loadData(){
+  const snap=await getDocs(query(collection(db,"resources"),orderBy("createdAt","desc")));
+  allItems=snap.docs.map(d=>({id:d.id,...d.data()}));renderTable(allItems);
+}
+function renderTable(items){
+  const tbody=document.getElementById("dataTable");
+  if(!items.length){tbody.innerHTML=`<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">📚</div><h3>No resources yet</h3></div></td></tr>`;return;}
+  tbody.innerHTML=items.map(p=>`<tr>
+    <td><div class="td-title">${p.title||"Untitled"}</div></td>
+    <td><span style="font-size:0.83rem;color:var(--text-muted)">${p.category||"—"}</span></td>
+    <td><span style="font-size:0.83rem;color:var(--text-muted)">${p.type||"Article"}</span></td>
+    <td><span class="badge badge-${p.status==="published"?"published":"draft"}">${p.status||"draft"}</span></td>
+    <td class="td-meta">${(p.createdAt||"").slice(0,10)}</td>
+    <td><div class="td-actions">
+      <button class="btn btn-outline btn-sm" onclick="editItem('${p.id}')"><i class="fas fa-pen"></i></button>
+      <button class="btn btn-danger btn-sm"  onclick="confirmDelete('${p.id}','${(p.title||"").replace(/'/g,"\\'")}')"><i class="fas fa-trash"></i></button>
+    </div></td>
+  </tr>`).join("");
+}
+document.getElementById("searchInput").addEventListener("input",filter);
+document.getElementById("filterCat").addEventListener("change",filter);
+function filter(){const q=document.getElementById("searchInput").value.toLowerCase();const c=document.getElementById("filterCat").value;renderTable(allItems.filter(p=>(!q||(p.title||"").toLowerCase().includes(q))&&(!c||p.category===c)));}
+
+function openModal(item=null){
+  document.getElementById("modalTitle").textContent=item?"Edit Resource":"New Health Resource";
+  document.getElementById("editId").value=item?.id||"";
+  document.getElementById("fTitle").value=item?.title||"";
+  document.getElementById("fCategory").value=item?.category||"SRH";
+  document.getElementById("fType").value=item?.type||"Article";
+  document.getElementById("fSummary").value=item?.summary||"";
+  document.getElementById("fContent").innerHTML=item?.content||"";
+  document.getElementById("fPublished").checked=item?.status==="published";
+  document.getElementById("coverUrl").value=item?.coverUrl||"";
+  document.getElementById("modalAlert").style.display="none";
+  if(item?.coverUrl){document.getElementById("coverPreview").src=item.coverUrl;document.getElementById("coverPreview").style.display="block";}
+  else document.getElementById("coverPreview").style.display="none";
+  document.getElementById("mainModal").classList.add("open");
+}
+window.editItem=(id)=>{const p=allItems.find(x=>x.id===id);if(p)openModal(p);};
+document.getElementById("closeModal").addEventListener("click",()=>document.getElementById("mainModal").classList.remove("open"));
+document.getElementById("cancelBtn").addEventListener("click",()=>document.getElementById("mainModal").classList.remove("open"));
+document.getElementById("newBtn").addEventListener("click",()=>openModal());
+document.getElementById("toolbar").querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{document.execCommand(btn.dataset.cmd,false,btn.dataset.val||null);document.getElementById("fContent").focus();}));
+
+// Image upload
+const zone=document.getElementById("dropZone"),input=document.getElementById("coverFile");
+zone.addEventListener("click",()=>input.click());
+zone.addEventListener("dragover",e=>{e.preventDefault();zone.classList.add("dragover");});
+zone.addEventListener("dragleave",()=>zone.classList.remove("dragover"));
+zone.addEventListener("drop",e=>{e.preventDefault();zone.classList.remove("dragover");handleFile(e.dataTransfer.files[0]);});
+input.addEventListener("change",()=>handleFile(input.files[0]));
+async function handleFile(file){if(!file)return;const bar=document.getElementById("uploadBar");bar.style.width="30%";try{const url=await uploadToImageKit(file,"resources");bar.style.width="100%";setTimeout(()=>bar.style.width="0",800);document.getElementById("coverUrl").value=url;document.getElementById("coverPreview").src=url;document.getElementById("coverPreview").style.display="block";}catch(e){showAlert("Upload failed: "+e.message);bar.style.width="0";}}
+
+document.getElementById("saveBtn").addEventListener("click",async()=>{
+  const btn=document.getElementById("saveBtn");
+  const title=document.getElementById("fTitle").value.trim();
+  const content=document.getElementById("fContent").innerHTML.trim();
+  if(!title)return showAlert("Title is required.");
+  btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving…';
+  const id=document.getElementById("editId").value;
+  const data={title,category:document.getElementById("fCategory").value,type:document.getElementById("fType").value,summary:document.getElementById("fSummary").value.trim(),content,status:document.getElementById("fPublished").checked?"published":"draft",coverUrl:document.getElementById("coverUrl").value};
+  try{
+    if(id)await updateDoc(doc(db,"resources",id),{...data,updatedAt:new Date().toISOString()});
+    else await addDoc(collection(db,"resources"),{...data,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+    toast("Saved ✓","success");document.getElementById("mainModal").classList.remove("open");await loadData();
+  }catch(e){showAlert("Error: "+e.message);}
+  btn.disabled=false;btn.innerHTML='<i class="fas fa-floppy-disk"></i> Save Resource';
+});
+
+window.confirmDelete=(id,title)=>{deleteTargetId=id;document.getElementById("deleteTitle").textContent=title;document.getElementById("deleteModal").classList.add("open");};
+document.getElementById("closeDeleteModal").addEventListener("click",()=>document.getElementById("deleteModal").classList.remove("open"));
+document.getElementById("cancelDeleteBtn").addEventListener("click",()=>document.getElementById("deleteModal").classList.remove("open"));
+document.getElementById("confirmDeleteBtn").addEventListener("click",async()=>{if(!deleteTargetId)return;await deleteDoc(doc(db,"resources",deleteTargetId));document.getElementById("deleteModal").classList.remove("open");toast("Deleted");await loadData();});
+
+function showAlert(msg){const a=document.getElementById("modalAlert");a.className="alert alert-error";a.innerHTML=`<i class="fas fa-circle-exclamation"></i><span>${msg}</span>`;a.style.display="flex";}
+function toast(msg,type="default"){const c=document.getElementById("toast-container");const t=document.createElement("div");t.className=`toast ${type}`;t.innerHTML=`<i class="fas fa-check-circle"></i> ${msg}`;c.appendChild(t);setTimeout(()=>{t.style.opacity="0";t.style.transition="all 0.3s";setTimeout(()=>t.remove(),300);},3500);}
+</script>
+</body>
+</html>

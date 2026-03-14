@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — CareSphere</title>
+  <link rel="icon" href="images/logo.png" type="image/png" />
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .founder-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid; grid-template-columns: 280px 1fr;
+    }
+    .founder-photo-wrap {
+      background: linear-gradient(160deg, var(--teal-pale), var(--green-pale));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem; min-height: 300px;
+    }
+    .founder-info { padding: 3rem; }
+    .founder-title { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 0.5rem; }
+    .founder-info h3 { margin-bottom: 1rem; }
+    .founder-info p  { margin-bottom: 1rem; }
+    .timeline { position: relative; }
+    .timeline::before { content:''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: var(--teal-pale); }
+    .timeline-item { display: flex; gap: 2rem; padding-bottom: 2rem; position: relative; }
+    .timeline-dot { width: 42px; height: 42px; min-width: 42px; border-radius: 50%; background: var(--teal-pale); border: 3px solid var(--teal); display: flex; align-items: center; justify-content: center; font-size: 1rem; z-index: 1; }
+    .timeline-content h4 { margin-bottom: 0.3rem; }
+    .timeline-content p  { font-size: 0.9rem; }
+    @media(max-width:768px){ .founder-card{grid-template-columns:1fr;} .founder-photo-wrap{min-height:200px;} }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="CareSphere Logo" onerror="this.style.display='none'"/>Care<span class="accent">Sphere</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="impact.html">Impact</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get in Touch</a>
+      <button class="nav-toggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>About Us</span></div>
+        <h1>About CareSphere</h1>
+        <p>Our story, mission, values, and the people behind the initiative.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="gap:4rem;">
+        <div class="fade-in">
+          <span class="section-label">Our Story</span>
+          <h2>Born from a Need for Inclusive Healthcare</h2>
+          <p style="margin-bottom:1.2rem;">CareSphere was founded with a clear understanding of the healthcare gaps that exist in underserved communities — especially for youth and women. Many individuals face significant barriers including limited facility access, financial constraints, unreliable health information, and deep-rooted social stigma around essential health topics.</p>
+          <p style="margin-bottom:1.2rem;">By combining digital health technology with community-driven programs, CareSphere was built to be both a platform and a movement — one that bridges the gap between digital innovation and real-world healthcare delivery.</p>
+          <p>Today, CareSphere serves communities in Rwanda with a long-term vision of scaling across Sub-Saharan Africa, building more inclusive, resilient, and accessible health systems.</p>
+        </div>
+        <div class="fade-in">
+          <div class="highlight-box">
+            <div style="font-size:3rem;margin-bottom:1rem;">🌿</div>
+            <h3 style="margin-bottom:1rem;">What Makes Us Different</h3>
+            <div style="display:flex;flex-direction:column;gap:1rem;">
+              <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+                <i class="fa-solid fa-circle-check" style="color:var(--teal);margin-top:4px;flex-shrink:0;"></i>
+                <p style="margin:0;font-size:0.92rem;"><strong>Integrated Approach:</strong> We combine digital tools with face-to-face community engagement.</p>
+              </div>
+              <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+                <i class="fa-solid fa-circle-check" style="color:var(--teal);margin-top:4px;flex-shrink:0;"></i>
+                <p style="margin:0;font-size:0.92rem;"><strong>Privacy-First:</strong> All services are delivered with full confidentiality and respect.</p>
+              </div>
+              <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+                <i class="fa-solid fa-circle-check" style="color:var(--teal);margin-top:4px;flex-shrink:0;"></i>
+                <p style="margin:0;font-size:0.92rem;"><strong>Community-Centered:</strong> Programs are designed with, not just for, the communities we serve.</p>
+              </div>
+              <div style="display:flex;gap:0.8rem;align-items:flex-start;">
+                <i class="fa-solid fa-circle-check" style="color:var(--teal);margin-top:4px;flex-shrink:0;"></i>
+                <p style="margin:0;font-size:0.92rem;"><strong>Affordable Access:</strong> Healthcare should never be out of reach due to financial barriers.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION & VISION -->
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Purpose</span>
+        <h2>Mission & Vision</h2>
+      </div>
+      <div class="grid-2" style="gap:2rem;">
+        <div class="card fade-in" style="border-top:4px solid var(--teal);">
+          <div style="font-size:2rem;margin-bottom:1rem;">🎯</div>
+          <h3>Our Mission</h3>
+          <p>To improve healthcare access by delivering inclusive, confidential, and affordable health services through a combination of digital innovation and community-based healthcare programs.</p>
+        </div>
+        <div class="card fade-in" style="border-top:4px solid var(--green);">
+          <div style="font-size:2rem;margin-bottom:1rem;">🌍</div>
+          <h3>Our Vision</h3>
+          <p>A future where everyone — regardless of location, background, or socioeconomic status — can access trusted and holistic healthcare services across Rwanda and Sub-Saharan Africa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE VALUES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">What We Stand For</span>
+        <h2>Our Core Values</h2>
+        <p>These values guide every program, interaction, and decision at CareSphere.</p>
+      </div>
+      <div class="grid-3">
+        <div class="value-card fade-in"><div style="font-size:1.8rem;margin-bottom:0.8rem;">🤝</div><h4>Inclusion</h4><p>We serve everyone regardless of gender, age, background, or socioeconomic status, ensuring no one is left behind.</p></div>
+        <div class="value-card fade-in"><div style="font-size:1.8rem;margin-bottom:0.8rem;">🔒</div><h4>Confidentiality</h4><p>Privacy and dignity are paramount. All health services are delivered with strict confidentiality and respect.</p></div>
+        <div class="value-card fade-in"><div style="font-size:1.8rem;margin-bottom:0.8rem;">💡</div><h4>Innovation</h4><p>We leverage digital technology to solve real healthcare challenges in creative, evidence-based ways.</p></div>
+        <div class="value-card fade-in"><div style="font-size:1.8rem;margin-bottom:0.8rem;">🌱</div><h4>Community First</h4><p>Our programs are rooted in the communities we serve, shaped by their needs, voices, and lived realities.</p></div>
+        <div class="value-card fade-in"><div style="font-size:1.8rem;margin-bottom:0.8rem;">✅</div><h4>Integrity</h4><p>We operate with transparency, honesty, and accountability in everything we do.</p></div>
+        <div class="value-card fade-in"><div style="font-size:1.8rem;margin-bottom:0.8rem;">🏥</div><h4>Quality Care</h4><p>We are committed to providing reliable, evidence-based health information and services.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Leadership</span>
+        <h2>Meet Our Founder</h2>
+      </div>
+      <div class="founder-card fade-in" style="box-shadow:var(--shadow-md);">
+        <div class="founder-photo-wrap">
+          <img src="images/ceo.jpeg" alt="CEO" class="image" />
+        </div>
+        <div class="founder-info">
+          <div class="founder-title">Founder & CEO</div>
+          <h3>Gedeon Niyikomeye</h3>
+          <p>Gedeon Niyikomeye is a Rwandan health and wellness professional with a background in Health Science and Physiotherapy. He is a YALI Regional Leadership Center East Africa alumnus, Aspire Leaders Program alumnus, and a Tony Elumelu Foundation (TEF) Entrepreneurship Programme participant, where he was awarded seed funding capital.</p>
+          <p style="margin-top:0.8rem;">Gedeon participated in the UNLEASH Innovation Lab Rwanda and completed the Global Youth Climate Training with the Global Youth Coalition, UPG Sustainability Leadership Program, FXB Climate Summer Training, and the Franklin Covey "7 Habits of Highly Effective People" program. He holds a Safeguarding Essentials Certificate from Kaya and the Humanitarian Leadership Academy, and serves as a Global Youth Ambassador at Theirworld, Global Peace Ambassador at Global Peace Chain, and volunteer coach at iDebate Rwanda.</p>
+          <div class="tag-list" style="margin-bottom:1.2rem;margin-top:1rem;">
+            <span class="pill">Health Science</span>
+            <span class="pill">Physiotherapy</span>
+            <span class="pill">YALI Alumnus</span>
+            <span class="pill">TEF Fellow</span>
+            <span class="pill">Community Health</span>
+          </div>
+          <div class="team-socials" style="justify-content:flex-start;">
+            <a href="https://www.linkedin.com/in/gedeon-niyikomeye-643b71363?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="team-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://x.com/caresphare?s=21" class="team-social-link" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            <a href="mailto:gedeonkkomeye@gmail.com" class="team-social-link" title="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Our Team</span>
+        <h2>The People Behind CareSphere</h2>
+        <p>A passionate, growing team dedicated to transforming healthcare access in our communities. Some positions are currently being filled — coming soon.</p>
+      </div>
+      <div class="grid-3">
+        <div class="team-card fade-in">
+          <div class="team-photo-placeholder">
+             <img src="images/ceo.jpeg" alt="CEO" class="image" />
+          </div>
+          <div class="team-info">
+            <h4>Gedeon Niyikomeye</h4>
+            <div class="team-role">Founder & CEO</div>
+            <p class="team-bio">Health Science & Physiotherapy professional, YALI alumnus, and TEF Fellow passionate about equitable digital health solutions for underserved communities.</p>
+            <div class="team-socials">
+              <a href="https://www.linkedin.com/in/gedeon-niyikomeye-643b71363?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="team-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="https://x.com/caresphare?s=21" class="team-social-link" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+              <a href="mailto:gedeonkkomeye@gmail.com" class="team-social-link" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card fade-in">
+          <div class="team-photo-placeholder">
+             <img src="images/programs.jpeg" alt="Chief Operations Officer Photo" class="image" />
+          </div>
+          <div class="team-info">
+            <h4>Hertier Hatangimana</h4>
+            <div class="team-role">Chief Operations Officer (COO)</div>
+            <p class="team-bio">Oversees day-to-day operations, program delivery, and organizational effectiveness to ensure CareSphere's mission is executed efficiently.</p>
+            <div class="team-socials">
+              <a href="https://www.linkedin.com/in/hertier-hatangimana-05b64b23a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="team-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="https://x.com/Hertier22" class="team-social-link" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card fade-in" style="position:relative;opacity:0.75;">
+          <div style="position:absolute;top:12px;right:12px;background:var(--gold);color:white;font-size:0.7rem;font-weight:700;padding:0.25rem 0.7rem;border-radius:50px;letter-spacing:0.06em;z-index:2;">COMING SOON</div>
+          <div class="team-photo-placeholder">👤</div>
+          <div class="team-info">
+            <h4>Position Open</h4>
+            <div class="team-role">Partnerships & Fundraising Manager</div>
+            <p class="team-bio">Will lead strategic partnerships, donor relations, and fundraising efforts to sustain and scale CareSphere's programs.</p>
+            <div class="team-socials">
+              <a href="contact.html" class="team-social-link" title="Apply"><i class="fas fa-user-plus"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card fade-in">
+          <div class="team-photo-placeholder">
+            <img src="images/emmanuel.jpeg" alt="Partnerships & Fundraising Asst. Manager Photo" class="image" />
+          </div>
+          <div class="team-info">
+            <h4>Emmanuel Niyogisubizo</h4>
+            <div class="team-role">Partnerships & Fundraising Asst. Manager</div>
+            <p class="team-bio">Supports partnership development, stakeholder engagement, and fundraising activities to expand CareSphere's reach and resources.</p>
+            <div class="team-socials">
+              <a href="#" class="team-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="team-social-link" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card fade-in">
+          <div class="team-photo-placeholder">
+             <img src="images/vincent.jpeg" alt="Communication And Marketing Manager" class="image" />
+          </div>
+          <div class="team-info">
+            <h4>Vincent Ntawuruhunga</h4>
+            <div class="team-role">Communications & Marketing Manager</div>
+            <p class="team-bio">Leads CareSphere's communications strategy, brand voice, digital presence, and public health messaging across all platforms.</p>
+            <div class="team-socials">
+              <a href="#" class="team-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="team-social-link" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card fade-in" style="position:relative;opacity:0.75;">
+          <div style="position:absolute;top:12px;right:12px;background:var(--gold);color:white;font-size:0.7rem;font-weight:700;padding:0.25rem 0.7rem;border-radius:50px;letter-spacing:0.06em;z-index:2;">COMING SOON</div>
+          <div class="team-photo-placeholder">👤</div>
+          <div class="team-info">
+            <h4>Position Open</h4>
+            <div class="team-role">Community Engagement Coordinator</div>
+            <p class="team-bio">Will coordinate community health programs, grassroots campaigns, and local partnerships to deepen impact at the community level.</p>
+            <div class="team-socials">
+              <a href="contact.html" class="team-social-link" title="Apply"><i class="fas fa-user-plus"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card fade-in">
+          <div class="team-photo-placeholder">
+            <img src="images/paccy.jpeg" alt="Strategy & Innovation Manager Photo" class="image" />
+          </div>
+          <div class="team-info">
+            <h4>Pacifique Niyoyakoze</h4>
+            <div class="team-role">Strategy & Innovation Manager</div>
+            <p class="team-bio">Drives CareSphere's strategic planning, program innovation, and development of new digital health solutions for community impact.</p>
+            <div class="team-socials">
+              <a href="#" class="team-social-link" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="team-social-link" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card fade-in" style="position:relative;opacity:0.75;">
+          <div style="position:absolute;top:12px;right:12px;background:var(--gold);color:white;font-size:0.7rem;font-weight:700;padding:0.25rem 0.7rem;border-radius:50px;letter-spacing:0.06em;z-index:2;">COMING SOON</div>
+          <div class="team-photo-placeholder">👤</div>
+          <div class="team-info">
+            <h4>Position Open</h4>
+            <div class="team-role">Finance & Administration Manager</div>
+            <p class="team-bio">Will oversee financial planning, budgeting, administration, and compliance to ensure organizational sustainability and accountability.</p>
+            <div class="team-socials">
+              <a href="contact.html" class="team-social-link" title="Apply"><i class="fas fa-user-plus"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="text-center" style="margin-top:2rem;font-size:0.88rem;color:var(--text-light);">
+        Profile photos will be added to each team member's card. Replace placeholders with actual photos via the <code>images/</code> folder.
+      </p>
+    </div>
+  </section>
+
+  <!-- JOURNEY TIMELINE -->
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Our Journey</span>
+        <h2>CareSphere's Story So Far</h2>
+      </div>
+      <div style="max-width:700px;margin:0 auto;" class="fade-in">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot">🌱</div>
+            <div class="timeline-content">
+              <h4>Founding Vision</h4>
+              <p>CareSphere is conceived to address critical healthcare access gaps for youth and underserved communities in Rwanda.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">🏗️</div>
+            <div class="timeline-content">
+              <h4>Platform Development</h4>
+              <p>Digital health tools developed including telemedicine infrastructure and AI-powered symptom guidance modules.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">🤝</div>
+            <div class="timeline-content">
+              <h4>Community Programs Launch</h4>
+              <p>First community health campaigns and workshops launched across Kigali, focusing on SRH and preventive healthcare.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">📈</div>
+            <div class="timeline-content">
+              <h4>Growing Impact</h4>
+              <p>Over 5,000 individuals reached through combined digital and in-person programs, with expanding partner network.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">🌍</div>
+            <div class="timeline-content">
+              <h4>Vision: Sub-Saharan Expansion</h4>
+              <p>Long-term roadmap underway to scale CareSphere's model across Sub-Saharan Africa, building inclusive health systems.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="CareSphere" onerror="this.style.display='none'"/>Care<span class="accent" style="color:var(--teal-light);">Sphere</span></a>
+          <p>Improving access to inclusive, reliable, and affordable healthcare services for underserved communities.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="community.html">Community Programs</a></li>
+            <li><a href="impact.html">Impact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="resources.html">Health Resources</a></li>
+            <li><a href="blog.html">Blog & Insights</a></li>
+            <li><a href="members.html">Members</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Get in Touch</h4>
+          <div class="contact-info-item"><i class="fa-solid fa-envelope"></i><a href="mailto:carespheretha@gmail.com" style="color:rgba(255,255,255,0.65);">carespheretha@gmail.com</a></div>
+          <div class="contact-info-item"><i class="fa-solid fa-phone"></i><a href="tel:+250 790 916 548" style="color:rgba(255,255,255,0.65);">+250 790 916 548</a></div>
+          <div class="contact-info-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/250790916548" style="color:rgba(255,255,255,0.65);">WhatsApp Us</a></div>
+          <div class="contact-info-item"><i class="fa-solid fa-location-dot"></i><span>Kigali, Rwanda</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 CareSphere — Powered by THRIVEWELL HEALTH ALLIANCE LTD</span>
+        <span>Empowering Communities Through Health</span>
+      </div>
+    </div>
+  </footer>
+
+  <script> window.chtlConfig = { chatbotId: "2516122934" } </script>
+<script async data-id="2516122934" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+  <script src="js/main.js"></script>
+  <script type="module">import("./js/tracker.js").catch(()=>{});</script>
+</body>
+</html>

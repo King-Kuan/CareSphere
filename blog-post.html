@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Article — CareSphere</title>
+  <link rel="icon" href="images/logo.png" type="image/png"/>
+  <meta name="description" content="CareSphere health article"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .post-hero{padding:140px 2rem 60px;background:linear-gradient(135deg,var(--teal-dark),var(--teal));text-align:center}
+    .post-hero h1{color:var(--white);font-size:clamp(1.8rem,4vw,3rem);max-width:800px;margin:0 auto 1rem}
+    .post-meta{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;color:rgba(255,255,255,0.7);font-size:0.88rem;margin-top:1rem}
+    .post-meta span{display:flex;align-items:center;gap:6px}
+    .post-cover{width:100%;max-height:480px;object-fit:cover;border-radius:var(--radius-lg);margin:2rem 0;box-shadow:var(--shadow-md)}
+    .post-content{max-width:760px;margin:0 auto;line-height:1.85;font-size:1.05rem;color:var(--text-mid)}
+    .post-content h2{color:var(--teal-dark);margin:2rem 0 0.8rem;font-size:1.5rem}
+    .post-content h3{color:var(--teal-dark);margin:1.5rem 0 0.6rem;font-size:1.2rem}
+    .post-content p{margin-bottom:1.2rem}
+    .post-content ul,
+    .post-content ol{padding-left:1.5rem;margin-bottom:1.2rem}
+    .post-content li{margin-bottom:0.5rem}
+    .post-content strong{color:var(--text-dark)}
+    .post-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin:2rem 0}
+    .post-tag{background:var(--mint);color:var(--teal);padding:0.3rem 0.9rem;border-radius:50px;font-size:0.8rem;font-weight:600}
+    .share-row{display:flex;align-items:center;gap:1rem;padding:1.5rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:2rem 0}
+    .share-btn{display:inline-flex;align-items:center;gap:7px;padding:0.55rem 1.2rem;border-radius:50px;font-size:0.85rem;font-weight:600;cursor:pointer;border:none;transition:all 0.25s}
+    .share-fb{background:#1877f2;color:#fff}.share-fb:hover{background:#1464cc}
+    .share-tw{background:#000;color:#fff}.share-tw:hover{background:#333}
+    .share-wa{background:#25d366;color:#fff}.share-wa:hover{background:#1da851}
+    .share-li{background:#0077b5;color:#fff}.share-li:hover{background:#005e8e}
+    .back-link{display:inline-flex;align-items:center;gap:8px;color:var(--teal);font-weight:600;font-size:0.9rem;margin-bottom:2rem;transition:all 0.2s}
+    .back-link:hover{gap:12px}
+    .skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .not-found{text-align:center;padding:5rem 2rem}
+    .not-found .icon{font-size:4rem;margin-bottom:1rem}
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="CareSphere" onerror="this.style.display='none'"/>Care<span class="accent">Sphere</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="impact.html">Impact</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get in Touch</a>
+      <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- POST HERO — filled by JS -->
+  <div id="postHero" class="post-hero" style="display:none">
+    <div class="breadcrumb" style="justify-content:center;display:flex;gap:8px;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1rem">
+      <a href="index.html" style="color:rgba(255,255,255,0.6)">Home</a><span>/</span>
+      <a href="blog.html"  style="color:rgba(255,255,255,0.6)">Blog</a><span>/</span>
+      <span id="heroCategory" style="color:rgba(255,255,255,0.45)">Article</span>
+    </div>
+    <h1 id="heroTitle"></h1>
+    <div class="post-meta">
+      <span><i class="fa-regular fa-calendar"></i> <span id="heroDate"></span></span>
+      <span><i class="fa-regular fa-user"></i> <span id="heroAuthor"></span></span>
+      <span id="heroCatBadge"></span>
+    </div>
+  </div>
+
+  <!-- LOADING SKELETON -->
+  <div id="loadingSkeleton" class="section">
+    <div class="container" style="max-width:760px">
+      <div class="skeleton" style="height:40px;width:70%;margin-bottom:1rem"></div>
+      <div class="skeleton" style="height:20px;width:40%;margin-bottom:2rem"></div>
+      <div class="skeleton" style="height:320px;margin-bottom:2rem"></div>
+      <div class="skeleton" style="height:18px;margin-bottom:0.8rem"></div>
+      <div class="skeleton" style="height:18px;margin-bottom:0.8rem"></div>
+      <div class="skeleton" style="height:18px;width:80%;margin-bottom:0.8rem"></div>
+    </div>
+  </div>
+
+  <!-- POST BODY — filled by JS -->
+  <div id="postBody" class="section" style="display:none">
+    <div class="container" style="max-width:760px">
+      <a href="blog.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Blog</a>
+      <img id="postCover" class="post-cover" style="display:none" alt="">
+      <div class="post-content" id="postContent"></div>
+      <div class="post-tags" id="postTags"></div>
+      <div class="share-row">
+        <span style="font-size:0.88rem;font-weight:600;color:var(--text-mid)">Share:</span>
+        <button class="share-btn share-fb" id="shareFb"><i class="fab fa-facebook-f"></i> Facebook</button>
+        <button class="share-btn share-tw" id="shareTw"><i class="fab fa-x-twitter"></i> Twitter</button>
+        <button class="share-btn share-wa" id="shareWa"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+        <button class="share-btn share-li" id="shareLi"><i class="fab fa-linkedin-in"></i> LinkedIn</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOT FOUND -->
+  <div id="notFound" class="section" style="display:none">
+    <div class="container">
+      <div class="not-found">
+        <div class="icon">📭</div>
+        <h2>Article Not Found</h2>
+        <p style="color:var(--text-mid);margin:1rem 0">This article may have been removed or the link is invalid.</p>
+        <a href="blog.html" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i> Back to Blog</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="" onerror="this.style.display='none'"/>Care<span class="accent" style="color:var(--teal-light);">Sphere</span></a>
+          <p>Improving access to inclusive, reliable, and affordable healthcare for underserved communities.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/caresphare?s=21" class="social-link"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/gedeon-niyikomeye-643b71363" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Quick Links</h4><ul>
+          <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li><li><a href="blog.html">Blog</a></li></ul></div>
+        <div class="footer-col"><h4>Resources</h4><ul>
+          <li><a href="resources.html">Health Resources</a></li><li><a href="community.html">Community Programs</a></li>
+          <li><a href="members.html">Members</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-col"><h4>Get in Touch</h4>
+          <div class="contact-info-item"><i class="fa-solid fa-envelope"></i><a href="mailto:carespheretha@gmail.com" style="color:rgba(255,255,255,0.65);">carespheretha@gmail.com</a></div>
+          <div class="contact-info-item"><i class="fa-solid fa-phone"></i><a href="tel:+250790916548" style="color:rgba(255,255,255,0.65);">+250 790 916 548</a></div>
+          <div class="contact-info-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/250790916548" style="color:rgba(255,255,255,0.65);">WhatsApp Us</a></div>
+          <div class="contact-info-item"><i class="fa-solid fa-location-dot"></i><span>Kigali, Rwanda</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 CareSphere — Powered by THRIVEWELL HEALTH ALLIANCE LTD</span>
+        <span>Developed by The Palace Tech House | <a href="privacy.html" style="color:rgba(255,255,255,0.45)">Privacy Policy</a> · <a href="terms.html" style="color:rgba(255,255,255,0.45)">Terms</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script type="module">
+    import("./js/tracker.js").catch(()=>{});
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc }
+                             from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const FC = {apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",authDomain:"carespher.firebaseapp.com",projectId:"carespher",storageBucket:"carespher.firebasestorage.app",messagingSenderId:"1063379902456",appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"};
+    const db = getFirestore(initializeApp(FC));
+
+    const id = new URLSearchParams(location.search).get("id");
+    if (!id) { showNotFound(); } else { loadPost(id); }
+
+    async function loadPost(id) {
+      try {
+        const snap = await getDoc(doc(db, "blogs", id));
+        if (!snap.exists() || snap.data().status !== "published") return showNotFound();
+        const p = snap.data();
+
+        // Update page title & meta
+        document.title = `${p.title} — CareSphere`;
+        document.querySelector('meta[name="description"]')?.setAttribute("content", p.excerpt || p.title);
+
+        // Hero
+        document.getElementById("heroTitle").textContent    = p.title || "Article";
+        document.getElementById("heroCategory").textContent = p.category || "Article";
+        document.getElementById("heroDate").textContent     = p.createdAt ? new Date(p.createdAt).toLocaleDateString("en-RW",{year:"numeric",month:"long",day:"numeric"}) : "";
+        document.getElementById("heroAuthor").textContent   = p.author || "CareSphere Team";
+        document.getElementById("heroCatBadge").innerHTML   = p.category ? `<span style="background:rgba(255,255,255,0.15);border-radius:50px;padding:0.25rem 0.8rem;font-size:0.8rem">${p.category}</span>` : "";
+
+        // Cover image
+        if (p.coverUrl) {
+          const img = document.getElementById("postCover");
+          img.src = p.coverUrl; img.style.display = "block";
+        }
+
+        // Content
+        document.getElementById("postContent").innerHTML = p.content || "";
+
+        // Tags
+        if (p.tags?.length) {
+          document.getElementById("postTags").innerHTML = p.tags.map(t=>`<span class="post-tag">${t}</span>`).join("");
+        }
+
+        // Share buttons
+        const url   = encodeURIComponent(location.href);
+        const title = encodeURIComponent(p.title || "");
+        document.getElementById("shareFb").onclick = ()=>window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`,"_blank");
+        document.getElementById("shareTw").onclick = ()=>window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`,"_blank");
+        document.getElementById("shareWa").onclick = ()=>window.open(`https://wa.me/?text=${title}%20${url}`,"_blank");
+        document.getElementById("shareLi").onclick = ()=>window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`,"_blank");
+
+        // Show content
+        document.getElementById("loadingSkeleton").style.display = "none";
+        document.getElementById("postHero").style.display        = "block";
+        document.getElementById("postBody").style.display        = "block";
+      } catch(e) { showNotFound(); }
+    }
+
+    function showNotFound() {
+      document.getElementById("loadingSkeleton").style.display = "none";
+      document.getElementById("notFound").style.display        = "block";
+    }
+  </script>
+</body>
+</html>

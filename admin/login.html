@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Login — CareSphere</title>
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="auth-page">
+
+<div class="auth-card">
+  <div class="auth-logo">
+    <img src="../images/logo.png" alt="CareSphere" onerror="this.style.display='none'">
+    <h1>Care<span style="color:var(--teal-light)">Sphere</span></h1>
+    <p>Admin Panel · Sign In</p>
+  </div>
+
+  <div id="alertBox" style="display:none" class="alert"></div>
+
+  <!-- LOGIN FORM -->
+  <div id="loginView">
+    <h2>Welcome back</h2>
+    <p class="sub">Sign in to access the CareSphere admin panel.</p>
+    <form id="loginForm">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="your@email.com" required autofocus>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div style="position:relative">
+          <input type="password" id="password" placeholder="Your password" required style="padding-right:2.8rem">
+          <button type="button" id="togglePw" style="position:absolute;right:0.8rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted)">
+            <i class="fas fa-eye" id="pwIcon"></i>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+        <i class="fas fa-right-to-bracket"></i> Sign In
+      </button>
+    </form>
+    <div class="auth-divider" style="margin:1.2rem 0">or</div>
+    <button class="btn btn-ghost btn-full" id="showResetBtn">
+      <i class="fas fa-key"></i> Forgot Password?
+    </button>
+  </div>
+
+  <!-- RESET PASSWORD FORM -->
+  <div id="resetView" style="display:none">
+    <h2>Reset Password</h2>
+    <p class="sub">Enter your admin email and we'll send a password reset link.</p>
+    <form id="resetForm">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="resetEmail" placeholder="your@email.com" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="resetBtn">
+        <i class="fas fa-paper-plane"></i> Send Reset Link
+      </button>
+    </form>
+    <button class="btn btn-ghost btn-full" id="backToLoginBtn" style="margin-top:0.8rem">
+      <i class="fas fa-arrow-left"></i> Back to Login
+    </button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc }
+                           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged }
+                           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",
+  authDomain:"carespher.firebaseapp.com",
+  projectId:"carespher",
+  storageBucket:"carespher.firebasestorage.app",
+  messagingSenderId:"1063379902456",
+  appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"
+};
+const app  = initializeApp(firebaseConfig);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+// Redirect if already logged in
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    const snap = await getDoc(doc(db,"admin_users",user.uid));
+    if (snap.exists()) location.href = "index.html";
+  }
+});
+
+function showAlert(msg, type="error") {
+  const box = document.getElementById("alertBox");
+  box.className = `alert alert-${type}`;
+  box.innerHTML = `<i class="fas fa-${type==="error"?"circle-exclamation":type==="success"?"check-circle":"triangle-exclamation"}"></i><span>${msg}</span>`;
+  box.style.display = "flex";
+  box.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function hideAlert() { document.getElementById("alertBox").style.display="none"; }
+
+// Toggle password visibility
+document.getElementById("togglePw").addEventListener("click", () => {
+  const pw = document.getElementById("password");
+  const ic = document.getElementById("pwIcon");
+  pw.type = pw.type === "password" ? "text" : "password";
+  ic.className = pw.type === "password" ? "fas fa-eye" : "fas fa-eye-slash";
+});
+
+// Login
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  hideAlert();
+  const btn   = document.getElementById("loginBtn");
+  const email = document.getElementById("email").value.trim();
+  const pass  = document.getElementById("password").value;
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in…';
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, pass);
+    // Verify this user is in admin_users
+    const snap = await getDoc(doc(db,"admin_users",cred.user.uid));
+    if (!snap.exists()) {
+      await auth.signOut();
+      throw new Error("Access denied. This account is not an admin.");
+    }
+    location.href = "index.html";
+  } catch(err) {
+    let msg = err.message;
+    if (msg.includes("invalid-credential") || msg.includes("wrong-password")) msg = "Incorrect email or password.";
+    if (msg.includes("too-many-requests")) msg = "Too many attempts. Please try again later.";
+    showAlert(msg.replace("Firebase:","").trim());
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Sign In';
+  }
+});
+
+// Show/hide reset view
+document.getElementById("showResetBtn").addEventListener("click", () => {
+  hideAlert();
+  document.getElementById("loginView").style.display = "none";
+  document.getElementById("resetView").style.display  = "block";
+});
+document.getElementById("backToLoginBtn").addEventListener("click", () => {
+  hideAlert();
+  document.getElementById("resetView").style.display  = "none";
+  document.getElementById("loginView").style.display  = "block";
+});
+
+// Password reset
+document.getElementById("resetForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  hideAlert();
+  const btn   = document.getElementById("resetBtn");
+  const email = document.getElementById("resetEmail").value.trim();
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+  try {
+    await sendPasswordResetEmail(auth, email);
+    showAlert("Password reset email sent! Check your inbox (and spam folder).", "success");
+  } catch(err) {
+    let msg = err.message;
+    if (msg.includes("user-not-found")) msg = "No account found with that email address.";
+    showAlert(msg.replace("Firebase:","").trim());
+  }
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Reset Link';
+});
+</script>
+</body>
+</html>

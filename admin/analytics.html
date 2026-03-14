@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Analytics — CareSphere Admin</title>
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.chart-card-tall{min-height:300px}
+.page-row{display:flex;align-items:center;justify-content:space-between;padding:0.7rem 0;border-bottom:1px solid var(--border)}
+.page-row:last-child{border-bottom:none}
+.page-path{font-size:0.88rem;color:var(--teal-dark);font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page-views{font-size:0.85rem;font-weight:700;color:var(--teal);margin-left:1rem;white-space:nowrap}
+.bar-row{margin-bottom:0.6rem}
+.bar-row-label{display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:3px}
+.bar-row-track{height:8px;background:var(--mint);border-radius:4px}
+.bar-row-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-light));border-radius:4px;transition:width 0.8s ease}
+.ref-row{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.88rem}
+.ref-row:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><img src="../images/logo.png" alt="" onerror="this.style.display='none'"><span>Care<em>Sphere</em></span></div>
+    <div class="sidebar-label">Main</div>
+    <a href="index.html"     class="nav-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    <a href="blogs.html"     class="nav-item"><i class="fas fa-newspaper"></i> Blog Posts</a>
+    <a href="services.html"  class="nav-item"><i class="fas fa-hand-holding-medical"></i> Services</a>
+    <a href="events.html"    class="nav-item"><i class="fas fa-calendar-days"></i> Events</a>
+    <a href="resources.html" class="nav-item"><i class="fas fa-book-medical"></i> Health Resources</a>
+    <div class="sidebar-label">Management</div>
+    <a href="team.html"      class="nav-item"><i class="fas fa-users"></i> Team Members</a>
+    <a href="analytics.html" class="nav-item active"><i class="fas fa-chart-line"></i> Analytics</a>
+    <div class="sidebar-footer">
+      <div class="sidebar-user"><div class="sidebar-avatar" id="sidebarAvatar">A</div><div class="sidebar-user-info"><div class="name" id="sidebarName">Admin</div><div class="role">Administrator</div></div></div>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-right-from-bracket"></i> Sign Out</button>
+    </div>
+  </aside>
+  <div class="main-content">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem"><button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button><span class="topbar-title">Analytics</span></div>
+      <div class="topbar-right">
+        <select id="rangeSelect" style="padding:0.45rem 0.8rem;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;outline:none;background:var(--white)">
+          <option value="7">Last 7 days</option>
+          <option value="14" selected>Last 14 days</option>
+          <option value="30">Last 30 days</option>
+        </select>
+      </div>
+    </header>
+    <div class="page-body">
+
+      <!-- SUMMARY CARDS -->
+      <div class="stats-grid" style="margin-bottom:2rem">
+        <div class="stat-card">
+          <div class="stat-icon teal"><i class="fas fa-eye"></i></div>
+          <div><div class="stat-num" id="sTotalViews">—</div><div class="stat-label">Total Page Views</div><div class="stat-change">All time</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fas fa-chart-bar"></i></div>
+          <div><div class="stat-num" id="sRangeViews">—</div><div class="stat-label">Views in Period</div><div class="stat-change" id="sRangeLabel">Last 14 days</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-calendar-check"></i></div>
+          <div><div class="stat-num" id="sTodayViews">—</div><div class="stat-label">Views Today</div><div class="stat-change">Live</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fas fa-file-lines"></i></div>
+          <div><div class="stat-num" id="sUniquePages">—</div><div class="stat-label">Unique Pages Tracked</div></div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div class="analytics-grid">
+        <!-- Daily chart -->
+        <div class="chart-card chart-card-tall">
+          <h3><i class="fas fa-chart-area" style="color:var(--teal);margin-right:8px"></i>Daily Visits</h3>
+          <div class="chart-bars" id="bigChart" style="height:220px;margin-top:1rem">
+            <div style="margin:auto;color:var(--text-muted);font-size:0.85rem">Loading…</div>
+          </div>
+        </div>
+        <!-- Top pages -->
+        <div class="chart-card">
+          <h3><i class="fas fa-ranking-star" style="color:var(--teal);margin-right:8px"></i>Top Pages</h3>
+          <div id="topPagesDetail" style="margin-top:1rem">
+            <div style="color:var(--text-muted);font-size:0.85rem">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM ROW -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+        <div class="chart-card">
+          <h3><i class="fas fa-link" style="color:var(--teal);margin-right:8px"></i>Top Referrers</h3>
+          <div id="referrers" style="margin-top:1rem"><div style="color:var(--text-muted);font-size:0.85rem">Loading…</div></div>
+        </div>
+        <div class="chart-card">
+          <h3><i class="fas fa-table-list" style="color:var(--teal);margin-right:8px"></i>All Pages — Lifetime Views</h3>
+          <div id="allPages" style="margin-top:1rem;max-height:320px;overflow-y:auto"><div style="color:var(--text-muted);font-size:0.85rem">Loading…</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div id="toast-container"></div>
+
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, query, orderBy, limit }
+                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut }
+                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const FC={apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",authDomain:"carespher.firebaseapp.com",projectId:"carespher",storageBucket:"carespher.firebasestorage.app",messagingSenderId:"1063379902456",appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"};
+const app=initializeApp(FC);const db=getFirestore(app);const auth=getAuth(app);
+
+onAuthStateChanged(auth,async(user)=>{
+  if(!user)return location.href="login.html";
+  const snap=await getDoc(doc(db,"admin_users",user.uid));
+  if(!snap.exists()){await signOut(auth);return location.href="login.html";}
+  const d=snap.data();document.getElementById("sidebarName").textContent=`${d.firstName||""} ${d.lastName||""}`.trim();
+  document.getElementById("sidebarAvatar").textContent=(d.firstName||"A")[0].toUpperCase();
+  loadAnalytics();
+});
+document.getElementById("logoutBtn").addEventListener("click",async()=>{await signOut(auth);location.href="login.html";});
+document.getElementById("menuToggle").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+document.getElementById("rangeSelect").addEventListener("change",loadAnalytics);
+
+async function loadAnalytics(){
+  const range=parseInt(document.getElementById("rangeSelect").value);
+  document.getElementById("sRangeLabel").textContent=`Last ${range} days`;
+
+  // Fetch all collections in parallel
+  const [pageSnap, dailySnap, refSnap] = await Promise.all([
+    getDocs(collection(db,"analytics_pages")),
+    getDocs(query(collection(db,"analytics_daily"),orderBy("date","desc"),limit(60))),
+    getDocs(collection(db,"analytics_referrers"))
+  ]);
+
+  const today=new Date().toISOString().slice(0,10);
+  const pageDocs=pageSnap.docs.map(d=>d.data());
+  const dailyDocs=[...dailySnap.docs.map(d=>d.data())].sort((a,b)=>a.date.localeCompare(b.date));
+  const refDocs=refSnap.docs.map(d=>d.data()).sort((a,b)=>b.count-a.count);
+
+  const totalViews=pageDocs.reduce((s,d)=>s+(d.views||0),0);
+  const todayDoc=dailyDocs.find(d=>d.date===today);
+  const todayViews=todayDoc?.visits||0;
+
+  // Range views
+  const cutoff=new Date();cutoff.setDate(cutoff.getDate()-range);
+  const cutoffStr=cutoff.toISOString().slice(0,10);
+  const rangeViews=dailyDocs.filter(d=>d.date>=cutoffStr).reduce((s,d)=>s+(d.visits||0),0);
+
+  document.getElementById("sTotalViews").textContent=totalViews.toLocaleString();
+  document.getElementById("sRangeViews").textContent=rangeViews.toLocaleString();
+  document.getElementById("sTodayViews").textContent=todayViews.toLocaleString();
+  document.getElementById("sUniquePages").textContent=pageDocs.length.toLocaleString();
+
+  // Daily chart (last N days)
+  const chartDays=dailyDocs.filter(d=>d.date>=cutoffStr);
+  const maxV=Math.max(...chartDays.map(d=>d.visits||0),1);
+  document.getElementById("bigChart").innerHTML=chartDays.length
+    ?chartDays.map(d=>{const v=d.visits||0;const pct=Math.round((v/maxV)*100);const lbl=d.date.slice(5);return`<div class="chart-bar-wrap"><div class="chart-bar-val">${v}</div><div class="chart-bar" style="height:${pct}%"></div><div class="chart-bar-label">${lbl}</div></div>`;}).join("")
+    :'<div style="margin:auto;color:var(--text-muted);font-size:0.85rem">No data for this range</div>';
+
+  // Top pages detail
+  const sorted=[...pageDocs].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,10);
+  const maxPV=Math.max(...sorted.map(d=>d.views||0),1);
+  document.getElementById("topPagesDetail").innerHTML=sorted.length
+    ?sorted.map(d=>`<div class="bar-row"><div class="bar-row-label"><span style="color:var(--teal-dark);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%">${d.page||"/"}</span><span style="color:var(--teal);font-weight:700">${d.views||0}</span></div><div class="bar-row-track"><div class="bar-row-fill" style="width:${Math.round(((d.views||0)/maxPV)*100)}%"></div></div></div>`).join("")
+    :'<div style="color:var(--text-muted);font-size:0.85rem">No page data yet</div>';
+
+  // All pages table
+  document.getElementById("allPages").innerHTML=[...pageDocs].sort((a,b)=>(b.views||0)-(a.views||0))
+    .map(d=>`<div class="page-row"><span class="page-path">${d.page||"/"}</span><span class="page-views">${(d.views||0).toLocaleString()}</span></div>`).join("")||
+    '<div style="color:var(--text-muted);font-size:0.85rem">No data yet</div>';
+
+  // Referrers
+  document.getElementById("referrers").innerHTML=refDocs.length
+    ?refDocs.slice(0,8).map(d=>`<div class="ref-row"><span style="color:var(--teal-dark)">${d.referrer||"direct"}</span><span style="font-weight:700;color:var(--teal)">${d.count||0}</span></div>`).join("")
+    :'<div style="color:var(--text-muted);font-size:0.85rem">No referrer data yet. Referrers are tracked when visitors come from another site.</div>';
+}
+</script>
+</body>
+</html>

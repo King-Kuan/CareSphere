@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard — CareSphere Admin</title>
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="../images/logo.png" alt="" onerror="this.style.display='none'">
+      <span>Care<em>Sphere</em></span>
+    </div>
+    <div class="sidebar-label">Main</div>
+    <a href="index.html"      class="nav-item active"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    <a href="blogs.html"      class="nav-item"><i class="fas fa-newspaper"></i> Blog Posts</a>
+    <a href="services.html"   class="nav-item"><i class="fas fa-hand-holding-medical"></i> Services</a>
+    <a href="events.html"     class="nav-item"><i class="fas fa-calendar-days"></i> Events</a>
+    <a href="resources.html"  class="nav-item"><i class="fas fa-book-medical"></i> Health Resources</a>
+    <div class="sidebar-label">Management</div>
+    <a href="team.html"       class="nav-item"><i class="fas fa-users"></i> Team Members</a>
+    <a href="analytics.html"  class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebarAvatar">A</div>
+        <div class="sidebar-user-info">
+          <div class="name" id="sidebarName">Admin</div>
+          <div class="role">Administrator</div>
+        </div>
+      </div>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-right-from-bracket"></i> Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-content">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        <span class="topbar-title">Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-badge" id="todayDate"></span>
+        <a href="../index.html" target="_blank" class="btn btn-outline btn-sm"><i class="fas fa-arrow-up-right-from-square"></i> View Site</a>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <!-- WELCOME -->
+      <div style="margin-bottom:1.8rem">
+        <h2 style="font-family:var(--font-d);color:var(--teal-dark);font-size:1.5rem">Good <span id="greeting">day</span>, <span id="adminName">Admin</span> 👋</h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.3rem">Here's an overview of CareSphere's content and activity.</p>
+      </div>
+
+      <!-- STAT CARDS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon teal"><i class="fas fa-newspaper"></i></div>
+          <div><div class="stat-num" id="statBlogs">—</div><div class="stat-label">Blog Posts</div><div class="stat-change" id="statBlogsP">Loading…</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fas fa-calendar-days"></i></div>
+          <div><div class="stat-num" id="statEvents">—</div><div class="stat-label">Events</div><div class="stat-change" id="statEventsP">Loading…</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-eye"></i></div>
+          <div><div class="stat-num" id="statViews">—</div><div class="stat-label">Total Page Views</div><div class="stat-change">All time</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fas fa-chart-bar"></i></div>
+          <div><div class="stat-num" id="statToday">—</div><div class="stat-label">Visits Today</div><div class="stat-change">Live</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon gold"><i class="fas fa-hand-holding-medical"></i></div>
+          <div><div class="stat-num" id="statServices">—</div><div class="stat-label">Services</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon teal"><i class="fas fa-book-medical"></i></div>
+          <div><div class="stat-num" id="statResources">—</div><div class="stat-label">Health Resources</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fas fa-users"></i></div>
+          <div><div class="stat-num" id="statTeam">—</div><div class="stat-label">Team Members</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-star"></i></div>
+          <div><div class="stat-num" id="statPublished">—</div><div class="stat-label">Published Items</div></div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:1.5rem;margin-bottom:2rem">
+        <div class="chart-card">
+          <h3><i class="fas fa-chart-area" style="color:var(--teal);margin-right:8px"></i>Daily Visits — Last 14 Days</h3>
+          <div class="chart-bars" id="chartBars">
+            <div style="color:var(--text-muted);font-size:0.85rem;margin:auto">Loading chart…</div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3><i class="fas fa-location-dot" style="color:var(--teal);margin-right:8px"></i>Top Pages</h3>
+          <div id="topPages" style="display:flex;flex-direction:column;gap:0.7rem;margin-top:0.5rem">
+            <div style="color:var(--text-muted);font-size:0.85rem">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT CONTENT -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+        <div class="table-card">
+          <div class="table-header">
+            <h3><i class="fas fa-newspaper" style="color:var(--teal);margin-right:8px"></i>Recent Blog Posts</h3>
+            <a href="blogs.html" class="btn btn-outline btn-sm">Manage</a>
+          </div>
+          <table>
+            <thead><tr><th>Title</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody id="recentBlogs"><tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:2rem">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <div class="table-header">
+            <h3><i class="fas fa-calendar-days" style="color:var(--teal);margin-right:8px"></i>Upcoming Events</h3>
+            <a href="events.html" class="btn btn-outline btn-sm">Manage</a>
+          </div>
+          <table>
+            <thead><tr><th>Event</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody id="recentEvents"><tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:2rem">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- QUICK ACTIONS -->
+      <div style="margin-top:1.5rem">
+        <h3 style="font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:1rem">Quick Actions</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:0.8rem">
+          <a href="blogs.html?new=1"     class="btn btn-green btn-sm"><i class="fas fa-plus"></i> New Blog Post</a>
+          <a href="events.html?new=1"    class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> New Event</a>
+          <a href="services.html?new=1"  class="btn btn-outline btn-sm"><i class="fas fa-plus"></i> New Service</a>
+          <a href="resources.html?new=1" class="btn btn-outline btn-sm"><i class="fas fa-plus"></i> New Resource</a>
+          <a href="team.html?new=1"      class="btn btn-outline btn-sm"><i class="fas fa-plus"></i> Add Team Member</a>
+          <a href="analytics.html"       class="btn btn-ghost btn-sm"><i class="fas fa-chart-line"></i> Full Analytics</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="toast-container"></div>
+
+<script type="module">
+import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, query, orderBy, limit, where, doc, getDoc }
+                           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut }
+                           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const FC = {apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",authDomain:"carespher.firebaseapp.com",projectId:"carespher",storageBucket:"carespher.firebasestorage.app",messagingSenderId:"1063379902456",appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"};
+const app  = initializeApp(FC);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+// Auth guard
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return location.href = "login.html";
+  const snap = await getDoc(doc(db,"admin_users",user.uid));
+  if (!snap.empty === false && !snap.exists()) return location.href = "login.html";
+  const data = snap.data();
+  const name = data?.firstName || user.displayName?.split(" ")[0] || "Admin";
+  document.getElementById("adminName").textContent = name;
+  document.getElementById("sidebarName").textContent = `${data?.firstName||""} ${data?.lastName||""}`.trim();
+  document.getElementById("sidebarAvatar").textContent = name[0].toUpperCase();
+  loadDashboard();
+});
+
+// Greeting
+const hr = new Date().getHours();
+document.getElementById("greeting").textContent = hr<12?"morning":hr<17?"afternoon":"evening";
+document.getElementById("todayDate").textContent = new Date().toLocaleDateString("en-RW",{weekday:"short",month:"short",day:"numeric"});
+
+// Logout
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  await signOut(auth); location.href = "login.html";
+});
+
+// Mobile sidebar
+document.getElementById("menuToggle").addEventListener("click", () =>
+  document.getElementById("sidebar").classList.toggle("open"));
+
+async function loadDashboard() {
+  // Count all collections in parallel
+  const [blogs, events, services, resources, team, analytics_pages, analytics_daily] = await Promise.all([
+    getDocs(collection(db,"blogs")),
+    getDocs(collection(db,"events")),
+    getDocs(collection(db,"services")),
+    getDocs(collection(db,"resources")),
+    getDocs(collection(db,"team_members")),
+    getDocs(collection(db,"analytics_pages")),
+    getDocs(query(collection(db,"analytics_daily"), orderBy("date","desc"), limit(14)))
+  ]);
+
+  const blogDocs     = blogs.docs;
+  const eventDocs    = events.docs;
+  const pubBlogs     = blogDocs.filter(d=>d.data().status==="published").length;
+  const pubEvents    = eventDocs.filter(d=>d.data().status==="published").length;
+  const totalViews   = analytics_pages.docs.reduce((s,d)=>s+(d.data().views||0),0);
+  const today        = new Date().toISOString().slice(0,10);
+  const todayDoc     = analytics_daily.docs.find(d=>d.data().date===today);
+  const todayViews   = todayDoc?.data().visits||0;
+  const allPublished = pubBlogs + pubEvents +
+    events.docs.filter(d=>d.data().status==="published").length +
+    resources.docs.filter(d=>d.data().status==="published").length +
+    services.docs.filter(d=>d.data().status==="published").length;
+
+  document.getElementById("statBlogs").textContent     = blogDocs.length;
+  document.getElementById("statBlogsP").textContent    = `${pubBlogs} published`;
+  document.getElementById("statEvents").textContent    = eventDocs.length;
+  document.getElementById("statEventsP").textContent   = `${pubEvents} published`;
+  document.getElementById("statViews").textContent     = totalViews.toLocaleString();
+  document.getElementById("statToday").textContent     = todayViews.toLocaleString();
+  document.getElementById("statServices").textContent  = services.docs.length;
+  document.getElementById("statResources").textContent = resources.docs.length;
+  document.getElementById("statTeam").textContent      = team.docs.length;
+  document.getElementById("statPublished").textContent = allPublished;
+
+  // Chart — daily visits last 14 days
+  const dailyDocs = [...analytics_daily.docs].sort((a,b)=>a.data().date.localeCompare(b.data().date));
+  const maxV = Math.max(...dailyDocs.map(d=>d.data().visits||0), 1);
+  const chartEl = document.getElementById("chartBars");
+  chartEl.innerHTML = dailyDocs.map(d => {
+    const v = d.data().visits||0;
+    const pct = Math.round((v/maxV)*100);
+    const label = d.data().date.slice(5); // MM-DD
+    return `<div class="chart-bar-wrap">
+      <div class="chart-bar-val">${v}</div>
+      <div class="chart-bar" style="height:${pct}%"></div>
+      <div class="chart-bar-label">${label}</div>
+    </div>`;
+  }).join("") || '<div style="color:var(--text-muted);font-size:0.85rem;margin:auto">No data yet</div>';
+
+  // Top pages
+  const pageDocs = [...analytics_pages.docs]
+    .sort((a,b)=>(b.data().views||0)-(a.data().views||0))
+    .slice(0,6);
+  document.getElementById("topPages").innerHTML = pageDocs.length
+    ? pageDocs.map(d=>{
+        const v = d.data().views||0;
+        const p = d.data().page||"/";
+        const pct = Math.round((v/Math.max(...pageDocs.map(x=>x.data().views||0),1))*100);
+        return `<div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:3px">
+            <span style="color:var(--teal-dark);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:65%">${p}</span>
+            <span style="color:var(--text-muted)">${v} views</span>
+          </div>
+          <div style="height:5px;background:var(--mint);border-radius:3px">
+            <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--teal),var(--teal-light));border-radius:3px"></div>
+          </div>
+        </div>`;
+      }).join("")
+    : '<div style="color:var(--text-muted);font-size:0.85rem">No page data yet</div>';
+
+  // Recent blogs
+  const recentBlogDocs = [...blogDocs]
+    .sort((a,b)=>(b.data().createdAt||"").localeCompare(a.data().createdAt||""))
+    .slice(0,5);
+  document.getElementById("recentBlogs").innerHTML = recentBlogDocs.length
+    ? recentBlogDocs.map(d=>{
+        const x = d.data();
+        return `<tr>
+          <td><div class="td-title" style="font-size:0.88rem">${x.title||"Untitled"}</div></td>
+          <td><span class="badge badge-${x.status==="published"?"published":"draft"}">${x.status||"draft"}</span></td>
+          <td class="td-meta">${(x.createdAt||"").slice(0,10)}</td>
+        </tr>`;
+      }).join("")
+    : `<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:2rem">No posts yet</td></tr>`;
+
+  // Recent events
+  const recentEventDocs = [...eventDocs]
+    .sort((a,b)=>(b.data().eventDate||"").localeCompare(a.data().eventDate||""))
+    .slice(0,5);
+  document.getElementById("recentEvents").innerHTML = recentEventDocs.length
+    ? recentEventDocs.map(d=>{
+        const x = d.data();
+        return `<tr>
+          <td><div class="td-title" style="font-size:0.88rem">${x.title||"Untitled"}</div></td>
+          <td><span class="badge badge-${x.status==="published"?"published":"draft"}">${x.status||"draft"}</span></td>
+          <td class="td-meta">${(x.eventDate||"").slice(0,10)}</td>
+        </tr>`;
+      }).join("")
+    : `<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:2rem">No events yet</td></tr>`;
+}
+</script>
+</body>
+</html>

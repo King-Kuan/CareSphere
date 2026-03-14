@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Community Programs — CareSphere</title>
+  <link rel="icon" href="images/logo.png" type="image/png" />
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .program-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; transition:var(--transition); }
+    .program-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+    .program-header { padding:2rem; background:linear-gradient(135deg,var(--teal-pale),var(--green-pale)); display:flex; align-items:center; gap:1rem; }
+    .program-header .card-icon { margin-bottom:0; flex-shrink:0; }
+    .program-body { padding:1.5rem 2rem 2rem; }
+    .impact-story { background:var(--cream); border-radius:var(--radius-lg); padding:2.5rem; display:grid; grid-template-columns:1fr 2fr; gap:2rem; align-items:center; }
+    .story-avatar { width:90px; height:90px; border-radius:50%; background:linear-gradient(135deg,var(--teal-pale),var(--green-pale)); display:flex; align-items:center; justify-content:center; font-size:2.8rem; }
+    .story-quote { font-style:italic; font-size:1.05rem; color:var(--text-dark); margin-bottom:0.8rem; line-height:1.7; }
+    .story-name { font-weight:600; color:var(--teal-dark); font-size:0.9rem; }
+    .story-context { font-size:0.82rem; color:var(--text-light); }
+    @media(max-width:768px){ .impact-story{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="CareSphere Logo" onerror="this.style.display='none'"/>Care<span class="accent">Sphere</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="community.html" class="active">Community</a></li>
+        <li><a href="resources.html">Resources</a></li><li><a href="impact.html">Impact</a></li>
+        <li><a href="blog.html">Blog</a></li><li><a href="members.html">Members</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get in Touch</a>
+      <button class="nav-toggle"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-content">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Community Programs</span></div>
+        <h1>Community Programs</h1>
+        <p>Bringing healthcare closer to the communities that need it most through outreach, education, and empowerment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="gap:4rem;">
+        <div class="fade-in">
+          <span class="section-label">Our Approach</span>
+          <h2>Healthcare That Meets People Where They Are</h2>
+          <p style="margin-bottom:1.2rem;">CareSphere believes that community health goes beyond hospital walls. Our community programs are designed to embed health education, prevention, and support directly into the spaces where people live, study, and work.</p>
+          <p>Through partnerships with local healthcare providers, schools, and community organizations, we run campaigns, workshops, and empowerment programs that make a lasting difference.</p>
+        </div>
+        <div class="grid-2" style="gap:1rem;" class="fade-in">
+          <div class="stat-box card fade-in"><div class="stat-number" data-target="2500" data-suffix="+">2,500+</div><div class="stat-label">People Reached</div></div>
+          <div class="stat-box card fade-in"><div class="stat-number" data-target="20" data-suffix="+">20+</div><div class="stat-label">Workshops Held</div></div>
+          <div class="stat-box card fade-in"><div class="stat-number" data-target="12" data-suffix="+">12+</div><div class="stat-label">Programs Running</div></div>
+          <div class="stat-box card fade-in"><div class="stat-number" data-target="8" data-suffix="+">8+</div><div class="stat-label">Partner Organizations</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="section bg-cream">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">What We Do</span>
+        <h2>Our Community Programs</h2>
+        <p>Each program is carefully designed to address specific community health needs.</p>
+      </div>
+      <div class="grid-3">
+        <div class="program-card fade-in">
+          <div class="program-header"><div class="card-icon">📣</div><h3 style="margin:0;font-size:1.15rem;">Health Campaigns</h3></div>
+          <div class="program-body">
+            <p>Community and school-based campaigns raising awareness on priority public health issues including SRH, disease prevention, and hygiene.</p>
+            <ul class="feature-list" style="margin-top:1rem;list-style:none;">
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>School health awareness drives</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Disease prevention campaigns</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Community mobilization events</li>
+            </ul>
+          </div>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-header"><div class="card-icon">🎓</div><h3 style="margin:0;font-size:1.15rem;">Workshops & Training</h3></div>
+          <div class="program-body">
+            <p>Interactive, skills-based health training sessions for community members, healthcare workers, and organizations.</p>
+            <ul style="margin-top:1rem;list-style:none;">
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Health education workshops</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>First aid & emergency response</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Community health worker training</li>
+            </ul>
+          </div>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-header"><div class="card-icon">🌟</div><h3 style="margin:0;font-size:1.15rem;">Youth Empowerment</h3></div>
+          <div class="program-body">
+            <p>Programs that equip young people with health knowledge, leadership skills, and the confidence to make informed health decisions.</p>
+            <ul style="margin-top:1rem;list-style:none;">
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Youth health clubs</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Peer health education</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Leadership development</li>
+            </ul>
+          </div>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-header"><div class="card-icon">📍</div><h3 style="margin:0;font-size:1.15rem;">Community Events</h3></div>
+          <div class="program-body">
+            <p>Regular health fairs, free screenings, and community health days bringing services directly to neighborhoods.</p>
+            <ul style="margin-top:1rem;list-style:none;">
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Free health screenings</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Community health days</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Health awareness observances</li>
+            </ul>
+          </div>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-header"><div class="card-icon">🎗️</div><h3 style="margin:0;font-size:1.15rem;">Awareness Drives</h3></div>
+          <div class="program-body">
+            <p>Targeted awareness initiatives on SRH, nutrition, mental health, and physical wellness tailored to community contexts.</p>
+            <ul style="margin-top:1rem;list-style:none;">
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>SRH awareness campaigns</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Nutrition education drives</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Mental health awareness</li>
+            </ul>
+          </div>
+        </div>
+        <div class="program-card fade-in">
+          <div class="program-header"><div class="card-icon">🏫</div><h3 style="margin:0;font-size:1.15rem;">School Programs</h3></div>
+          <div class="program-body">
+            <p>In-school health education programs in partnership with teachers, parents, and administrators for holistic student health.</p>
+            <ul style="margin-top:1rem;list-style:none;">
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Adolescent health curriculum</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Teacher & parent training</li>
+              <li style="display:flex;gap:0.6rem;align-items:flex-start;font-size:0.9rem;color:var(--text-mid);padding:0.3rem 0;"><i class="fa-solid fa-chevron-right" style="color:var(--teal-mid);margin-top:4px;flex-shrink:0;"></i>Student health screenings</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT STORIES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Real Stories</span>
+        <h2>Impact Stories from Our Communities</h2>
+        <p>Hearing directly from the people CareSphere has supported.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2rem;">
+        <div class="impact-story fade-in">
+          <div style="text-align:center;">
+            <div class="story-avatar" style="margin:0 auto 0.8rem;">👩🏾</div>
+            <div class="story-name">Aline N.</div>
+            <div class="story-context">Youth Program Participant</div>
+          </div>
+          <div>
+            <p class="story-quote">"Before CareSphere's workshop at our school, I had many questions about my health that I was too afraid to ask anyone. The program created a safe space where we could learn openly without judgment. Now I feel confident making informed decisions about my wellbeing."</p>
+          </div>
+        </div>
+        <div class="impact-story fade-in">
+          <div style="text-align:center;">
+            <div class="story-avatar" style="margin:0 auto 0.8rem;">👨🏾</div>
+            <div class="story-name">Emmanuel R.</div>
+            <div class="story-context">Community Health Campaign Attendee</div>
+          </div>
+          <div>
+            <p class="story-quote">"The free health screening day organized by CareSphere in our neighborhood was a turning point for many families. I discovered a health condition I had no idea about. Without that event, I may have gone years without knowing. They truly care about our community."</p>
+          </div>
+        </div>
+        <div class="impact-story fade-in">
+          <div style="text-align:center;">
+            <div class="story-avatar" style="margin:0 auto 0.8rem;">👩🏿</div>
+            <div class="story-name">Claudine M.</div>
+            <div class="story-context">Mother & Community Member</div>
+          </div>
+          <div>
+            <p class="story-quote">"As a mother of three, I always worried about getting reliable health information for my children. CareSphere's nutrition workshop helped me understand how to feed my family better with what we have locally available. Simple, practical, and respectful of our way of life."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container">
+      <div class="cta-band fade-in" style="background:linear-gradient(135deg,var(--green-dark),var(--green));">
+        <h2>Partner With Us in the Community</h2>
+        <p>Want to bring a CareSphere program to your school, community, or organization?</p>
+        <div class="btn-actions"><a href="contact.html" class="btn btn-white">Get in Touch</a><a href="partners.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.5);color:var(--white);">Become a Partner</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPCOMING EVENTS FROM ADMIN — dynamic -->
+  <section class="section bg-cream" id="adminEventsSection" style="display:none">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Upcoming Events</span>
+        <h2>Events & Programs Near You</h2>
+        <p>Latest events published by the CareSphere team.</p>
+      </div>
+      <div class="grid-3" id="adminEventsGrid"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="CareSphere" onerror="this.style.display='none'"/>Care<span class="accent" style="color:var(--teal-light);">Sphere</span></a>
+          <p>Improving access to inclusive, reliable, and affordable healthcare services for underserved communities.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/caresphare?s=21" class="social-link"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/gedeon-niyikomeye-643b71363?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Quick Links</h4><ul>
+          <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li><li><a href="community.html">Community Programs</a></li>
+          <li><a href="impact.html">Impact</a></li></ul>
+        </div>
+        <div class="footer-col"><h4>Resources</h4><ul>
+          <li><a href="resources.html">Health Resources</a></li><li><a href="blog.html">Blog & Insights</a></li>
+          <li><a href="members.html">Members</a></li><li><a href="contact.html">Contact Us</a></li></ul>
+        </div>
+        <div class="footer-col"><h4>Get in Touch</h4>
+          <div class="contact-info-item"><i class="fa-solid fa-envelope"></i><a href="mailto:carespheretha@gmail.com" style="color:rgba(255,255,255,0.65);">carespheretha@gmail.com</a></div>
+          <div class="contact-info-item"><i class="fa-solid fa-phone"></i><a href="tel:+250 790 916 548" style="color:rgba(255,255,255,0.65);">+250 790 916 548</a></div>
+          <div class="contact-info-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/250790916548" style="color:rgba(255,255,255,0.65);">WhatsApp Us</a></div>
+          <div class="contact-info-item"><i class="fa-solid fa-location-dot"></i><span>Kigali, Rwanda</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 CareSphere — Powered by THRIVEWELL HEALTH ALLIANCE LTD</span><span>Empowering Communities Through Health</span></div>
+    </div>
+  </footer>
+  <script> window.chtlConfig = { chatbotId: "2516122934" } </script>
+<script async data-id="2516122934" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+  <script src="js/main.js"></script>
+  <script type="module">import("./js/tracker.js").catch(()=>{});
+    import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where, orderBy }
+                               from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    const FC={apiKey:"AIzaSyBwq7tPqEgv446a9p6I25oyXznwlEIwcwc",authDomain:"carespher.firebaseapp.com",projectId:"carespher",storageBucket:"carespher.firebasestorage.app",messagingSenderId:"1063379902456",appId:"1:1063379902456:web:f26ebd2dcbde18e86a000d"};
+    const db = getFirestore(initializeApp(FC));
+    (async()=>{
+      try{
+        const snap = await getDocs(query(collection(db,"events"),where("status","==","published"),orderBy("eventDate","asc")));
+        const events = snap.docs.map(d=>({id:d.id,...d.data()}));
+        if(!events.length) return;
+        document.getElementById("adminEventsSection").style.display="";
+        document.getElementById("adminEventsGrid").innerHTML = events.map(e=>{
+          const thumb = e.coverUrl
+            ? `<img src="${e.coverUrl}" style="width:100%;height:180px;object-fit:cover;border-radius:var(--radius-lg) var(--radius-lg) 0 0" alt="">`
+            : `<div style="background:linear-gradient(135deg,var(--teal-dark),var(--green));height:100px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;display:flex;align-items:center;justify-content:center;font-size:2.5rem">📅</div>`;
+          return `<div class="card fade-in" style="padding:0;overflow:hidden">
+            ${thumb}
+            <div style="padding:1.5rem">
+              <span style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--teal)">${e.type||"Event"}</span>
+              <h4 style="margin:0.5rem 0 0.4rem;color:var(--teal-dark)">${e.title||"Untitled"}</h4>
+              <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:0.8rem">${(e.description||"").slice(0,100)}…</p>
+              <div style="display:flex;flex-wrap:wrap;gap:0.6rem;font-size:0.8rem;color:var(--text-muted)">
+                ${e.eventDate?`<span><i class="fa-regular fa-calendar" style="margin-right:4px"></i>${e.eventDate}</span>`:""}
+                ${e.location?`<span><i class="fa-solid fa-location-dot" style="margin-right:4px"></i>${e.location}</span>`:""}
+              </div>
+              ${e.registrationLink?`<a href="${e.registrationLink}" target="_blank" class="btn btn-primary" style="margin-top:1rem;font-size:0.85rem;padding:0.5rem 1.1rem">Register <i class="fa-solid fa-arrow-right"></i></a>`:""}
+            </div>
+          </div>`;
+        }).join("");
+      }catch(_){}
+    })();
+  </script>
+</body>
+</html>
